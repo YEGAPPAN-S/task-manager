@@ -7,418 +7,287 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><rect width='36' height='36' rx='10' fill='%236C63FF'/><text x='8' y='26' font-size='20' fill='white'>T</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0B0E14;
-  --bg-card: #131720;
-  --bg-column: #0F1219;
-  --bg-hover: #1A1F2E;
-  --bg-input: #161B26;
-  --border: #1E2433;
-  --border-hover: #2A3148;
-  --text: #E2E8F0;
-  --text-dim: #8892A8;
-  --text-muted: #5A6478;
-  --accent: #6C63FF;
-  --accent-glow: rgba(108,99,255,0.15);
-  --danger: #EF4444;
-  --success: #22C55E;
-  --warning: #F59E0B;
-  --flycart: #1f87ff;
-  --yuko: #6c62f4;
-  --retainful: #f75a1b;
-  --wployalty: #5149eb;
-  --upsellwp: #043785;
-  --spark-editor: #165236;
-  --other: #64748B;
+:root{
+  --bg:#0B0E14;--bg-card:#131720;--bg-col:#0F1219;--bg-hover:#1A1F2E;--bg-input:#161B26;
+  --border:#1E2433;--border-h:#2A3148;--text:#E2E8F0;--text-dim:#8892A8;--text-muted:#5A6478;
+  --accent:#6C63FF;--accent-g:rgba(108,99,255,.15);--danger:#EF4444;--success:#22C55E;--warn:#F59E0B;
+  --flycart:#1f87ff;--yuko:#6c62f4;--retainful:#f75a1b;--wployalty:#5149eb;
+  --upsellwp:#043785;--spark:#165236;--other:#64748B;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:auto;}
-::-webkit-scrollbar{width:6px;height:6px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:auto}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+button{font-family:'DM Sans',sans-serif;cursor:pointer}
+input,select,textarea{font-family:'DM Sans',sans-serif}
 
-/* ═══ Login ═══ */
-#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;position:relative;overflow:hidden;}
-#login-screen::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(108,99,255,0.08) 0%,transparent 70%);top:-200px;right:-200px;pointer-events:none;}
-#login-screen::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(249,115,22,0.06) 0%,transparent 70%);bottom:-200px;left:-100px;pointer-events:none;}
-.login-box{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:48px 40px;width:460px;max-width:92vw;position:relative;z-index:1;}
-.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
-.login-logo h1{font-size:22px;font-weight:700;letter-spacing:-0.5px;}
-.login-logo span{color:var(--accent);}
-.login-subtitle{color:var(--text-dim);font-size:14px;margin-bottom:28px;}
+/* ─── Login ─── */
+#login{display:flex;align-items:center;justify-content:center;min-height:100vh;position:relative;overflow:hidden}
+#login::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(108,99,255,.08) 0%,transparent 70%);top:-200px;right:-200px;pointer-events:none}
+#login::after{content:'';position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(249,115,22,.06) 0%,transparent 70%);bottom:-200px;left:-100px;pointer-events:none}
+.login-box{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:44px 38px;width:400px;max-width:92vw;position:relative;z-index:1}
+.logo{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.logo h1{font-size:21px;font-weight:700;letter-spacing:-.5px}
+.logo span{color:var(--accent)}
+.subtitle{color:var(--text-dim);font-size:13px;margin-bottom:28px}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+.fg select,.fg input,.fg textarea{width:100%;padding:10px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;outline:none;transition:border-color .2s,box-shadow .2s}
+.fg select:focus,.fg input:focus,.fg textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-g)}
+.fg select option{background:var(--bg-card);color:var(--text)}
+.fg .hint{font-size:10px;color:var(--text-muted);margin-top:4px}
+.fg textarea{resize:vertical;min-height:68px}
+.btn-login{width:100%;padding:12px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;transition:all .2s;margin-top:4px}
+.btn-login:hover{background:#5B54E6;transform:translateY(-1px);box-shadow:0 4px 20px var(--accent-g)}
+.btn-login:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.msg{font-size:12px;margin-top:10px;text-align:center;display:none}
+.msg.err{color:var(--danger);display:block}
+.msg.ok{color:var(--success);display:block}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* Tabs */
-.login-tabs{display:flex;gap:0;margin-bottom:24px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
-.login-tab{flex:1;padding:10px;text-align:center;font-size:13px;font-weight:600;cursor:pointer;background:transparent;border:none;color:var(--text-muted);transition:all 0.15s;font-family:'DM Sans',sans-serif;}
-.login-tab.active{background:var(--accent);color:#fff;}
-.login-tab:not(.active):hover{background:var(--bg-hover);color:var(--text);}
-.tab-panel{display:none;}
-.tab-panel.active{display:block;}
+/* ─── App ─── */
+#app{display:none;min-height:100vh;flex-direction:column}
 
-.form-group{margin-bottom:16px;}
-.form-group label{display:block;font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
-.form-group select,.form-group input{width:100%;padding:11px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;transition:border-color 0.2s,box-shadow 0.2s;outline:none;}
-.form-group select:focus,.form-group input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
-.form-group select option{background:var(--bg-card);color:var(--text);}
-.form-group .hint{font-size:11px;color:var(--text-muted);margin-top:4px;}
+.header{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;border-bottom:1px solid var(--border);background:var(--bg-card);position:sticky;top:0;z-index:100;gap:10px;flex-wrap:wrap}
+.h-left{display:flex;align-items:center;gap:12px}
+.h-logo{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:700;white-space:nowrap}
+.h-logo span{color:var(--accent)}
+.h-center{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.h-right{display:flex;align-items:center;gap:8px}
 
-.login-btn{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;margin-top:4px;}
-.login-btn:hover{background:#5B54E6;transform:translateY(-1px);box-shadow:0 4px 20px var(--accent-glow);}
-.login-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-.login-btn.green{background:var(--success);}
-.login-btn.green:hover{background:#1aad50;}
-.login-error{color:var(--danger);font-size:13px;margin-top:10px;text-align:center;display:none;}
-.login-success{color:var(--success);font-size:13px;margin-top:10px;text-align:center;display:none;}
-.login-divider{text-align:center;color:var(--text-muted);font-size:11px;margin:20px 0;position:relative;}
-.login-divider::before,.login-divider::after{content:'';position:absolute;top:50%;width:calc(50% - 40px);height:1px;background:var(--border);}
-.login-divider::before{left:0;}
-.login-divider::after{right:0;}
+.fbtn{padding:4px 11px;background:transparent;border:1px solid var(--border);border-radius:7px;color:var(--text-dim);font-size:11px;font-weight:500;transition:all .15s;white-space:nowrap}
+.fbtn:hover{border-color:var(--border-h);color:var(--text)}
+.fbtn.on{background:var(--accent-g);border-color:var(--accent);color:var(--accent)}
+.fbtn[data-p="Flycart"].on{border-color:var(--flycart);color:var(--flycart);background:rgba(31,135,255,.1)}
+.fbtn[data-p="Yuko"].on{border-color:var(--yuko);color:var(--yuko);background:rgba(108,98,244,.1)}
+.fbtn[data-p="Retainful"].on{border-color:var(--retainful);color:var(--retainful);background:rgba(247,90,27,.1)}
+.fbtn[data-p="WPLoyalty"].on{border-color:var(--wployalty);color:var(--wployalty);background:rgba(81,73,235,.1)}
+.fbtn[data-p="UpsellWP"].on{border-color:#4d8ee0;color:#4d8ee0;background:rgba(4,55,133,.15)}
+.fbtn[data-p="Spark Editor"].on{border-color:#3dbb7a;color:#3dbb7a;background:rgba(22,82,54,.15)}
+.fbtn[data-p="Other Works"].on{border-color:var(--other);color:var(--other);background:rgba(100,116,139,.1)}
 
-/* ═══ App ═══ */
-#app{display:none;min-height:100vh;flex-direction:column;}
+.sep{width:1px;height:18px;background:var(--border);margin:0 3px}
+.badge{display:flex;align-items:center;gap:7px;padding:4px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:500}
+.avatar{border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+.avatar-sm{width:22px;height:22px;font-size:9px}
+.avatar-xs{width:18px;height:18px;font-size:8px}
+.ibtn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);transition:all .15s}
+.ibtn:hover{border-color:var(--border-h);color:var(--text);background:var(--bg-hover)}
+.sync{font-size:10px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;white-space:nowrap}
+.sync.ok{color:var(--success)}.sync.err{color:var(--danger)}.sync.load{color:var(--warn)}
 
-/* Header */
-.header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--border);background:var(--bg-card);position:sticky;top:0;z-index:100;gap:12px;flex-wrap:wrap;}
-.header-left{display:flex;align-items:center;gap:14px;}
-.header-logo{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;letter-spacing:-0.5px;white-space:nowrap;}
-.header-logo span{color:var(--accent);}
-.header-center{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
-.header-right{display:flex;align-items:center;gap:10px;}
+.sbox{display:flex;align-items:center;gap:7px;padding:4px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;transition:border-color .2s}
+.sbox:focus-within{border-color:var(--accent)}
+.sbox input{background:none;border:none;color:var(--text);font-size:12px;outline:none;width:130px}
+.sbox svg{color:var(--text-muted);flex-shrink:0}
 
-.filter-btn{padding:5px 12px;background:transparent;border:1px solid var(--border);border-radius:7px;color:var(--text-dim);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
-.filter-btn:hover{border-color:var(--border-hover);color:var(--text);}
-.filter-btn.active{background:var(--accent-glow);border-color:var(--accent);color:var(--accent);}
-.filter-btn[data-product="Flycart"].active{border-color:var(--flycart);color:var(--flycart);background:rgba(31,135,255,0.1);}
-.filter-btn[data-product="Yuko"].active{border-color:var(--yuko);color:var(--yuko);background:rgba(108,98,244,0.1);}
-.filter-btn[data-product="Retainful"].active{border-color:var(--retainful);color:var(--retainful);background:rgba(247,90,27,0.1);}
-.filter-btn[data-product="WPLoyalty"].active{border-color:var(--wployalty);color:var(--wployalty);background:rgba(81,73,235,0.1);}
-.filter-btn[data-product="UpsellWP"].active{border-color:#4d8ee0;color:#4d8ee0;background:rgba(4,55,133,0.15);}
-.filter-btn[data-product="Spark Editor"].active{border-color:#3dbb7a;color:#3dbb7a;background:rgba(22,82,54,0.15);}
-.filter-btn[data-product="Other Works"].active{border-color:var(--other);color:var(--other);background:rgba(100,116,139,0.1);}
+/* ─── Board ─── */
+.board{display:flex;gap:16px;padding:18px 22px;flex:1;overflow-x:auto;align-items:flex-start}
+.col{min-width:300px;max-width:300px;flex-shrink:0;background:var(--bg-col);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;max-height:calc(100vh - 105px)}
+.col-head{display:flex;align-items:center;justify-content:space-between;padding:13px 14px 9px;border-bottom:1px solid var(--border)}
+.col-title{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.col-dot{width:7px;height:7px;border-radius:50%}
+.col[data-s="not-started"] .col-dot{background:#64748B}
+.col[data-s="pending"] .col-dot{background:#F59E0B}
+.col[data-s="working"] .col-dot{background:#3B82F6}
+.col[data-s="completed"] .col-dot{background:#22C55E}
+.col-cnt{background:var(--bg-hover);padding:1px 9px;border-radius:12px;font-size:11px;font-weight:600;color:var(--text-dim)}
+.col-add{display:flex;align-items:center;justify-content:center;width:24px;height:24px;background:transparent;border:1px dashed var(--border);border-radius:5px;color:var(--text-muted);font-size:15px;transition:all .15s}
+.col-add:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-g)}
+.col-body{padding:8px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:7px;min-height:50px;transition:background .15s}
+.col-body.over{background:rgba(108,99,255,.04);border-radius:0 0 14px 14px}
 
-.filter-sep{width:1px;height:20px;background:var(--border);margin:0 4px;}
-.user-badge{display:flex;align-items:center;gap:8px;padding:5px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:500;}
-.user-avatar,.task-assignee-avatar{border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;}
-.user-avatar{width:24px;height:24px;font-size:10px;}
-.task-assignee-avatar{width:20px;height:20px;font-size:9px;}
-.icon-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);cursor:pointer;transition:all 0.15s;}
-.icon-btn:hover{border-color:var(--border-hover);color:var(--text);background:var(--bg-hover);}
-.sync-indicator{font-size:10px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;white-space:nowrap;}
-.sync-indicator.syncing{color:var(--warning);}
-.sync-indicator.synced{color:var(--success);}
-.sync-indicator.error{color:var(--danger);}
+/* ─── Card ─── */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:9px;padding:11px 13px;cursor:grab;transition:all .15s;user-select:none}
+.card:hover{border-color:var(--border-h);transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.card.dragging{opacity:.4;transform:rotate(2deg) scale(.97)}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;gap:6px}
+.pbadge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.pbadge[data-p="Flycart"]{background:rgba(31,135,255,.15);color:var(--flycart)}
+.pbadge[data-p="Yuko"]{background:rgba(108,98,244,.15);color:var(--yuko)}
+.pbadge[data-p="Retainful"]{background:rgba(247,90,27,.15);color:var(--retainful)}
+.pbadge[data-p="WPLoyalty"]{background:rgba(81,73,235,.15);color:var(--wployalty)}
+.pbadge[data-p="UpsellWP"]{background:rgba(4,55,133,.25);color:#4d8ee0}
+.pbadge[data-p="Spark Editor"]{background:rgba(22,82,54,.25);color:#3dbb7a}
+.pbadge[data-p="Other Works"]{background:rgba(100,116,139,.15);color:var(--other)}
+.pdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.pdot.high{background:#EF4444;box-shadow:0 0 5px #EF4444}
+.pdot.medium{background:#F59E0B}
+.pdot.low{background:#22C55E}
+.card-title{font-size:13px;font-weight:600;line-height:1.35;margin-bottom:3px}
+.card-desc{font-size:11px;color:var(--text-dim);line-height:1.4;margin-bottom:7px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-tags{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:7px}
+.card-tag{font-size:9px;padding:1px 6px;background:var(--bg-hover);border-radius:3px;color:var(--text-dim);font-weight:500}
+.card-foot{display:flex;align-items:center;justify-content:space-between;padding-top:7px;border-top:1px solid var(--border)}
+.card-who{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-dim)}
+.card-due{font-size:10px;color:var(--text-muted);font-family:'JetBrains Mono',monospace}
+.card-due.overdue{color:#EF4444}
+.card-due.soon{color:#F59E0B}
+.card-meta{display:flex;align-items:center;gap:7px}
+.card-cmt{font-size:10px;color:var(--text-muted)}
+.empty{text-align:center;padding:24px 14px;color:var(--text-muted);font-size:11px}
 
-.search-box{display:flex;align-items:center;gap:8px;padding:5px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;transition:border-color 0.2s;}
-.search-box:focus-within{border-color:var(--accent);}
-.search-box input{background:none;border:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;width:140px;}
-.search-box svg{color:var(--text-muted);flex-shrink:0;}
-
-/* ═══ Board ═══ */
-.board{display:flex;gap:18px;padding:20px 24px;flex:1;overflow-x:auto;align-items:flex-start;}
-.column{min-width:310px;max-width:310px;flex-shrink:0;background:var(--bg-column);border:1px solid var(--border);border-radius:14px;display:flex;flex-direction:column;max-height:calc(100vh - 110px);}
-.column-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--border);}
-.column-title{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;}
-.column-dot{width:8px;height:8px;border-radius:50%;}
-.column[data-status="not-started"] .column-dot{background:#64748B;}
-.column[data-status="pending"] .column-dot{background:#F59E0B;}
-.column[data-status="working"] .column-dot{background:#3B82F6;}
-.column[data-status="completed"] .column-dot{background:#22C55E;}
-.column-count{background:var(--bg-hover);padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;color:var(--text-dim);}
-.column-add{display:flex;align-items:center;justify-content:center;width:26px;height:26px;background:transparent;border:1px dashed var(--border);border-radius:6px;color:var(--text-muted);cursor:pointer;font-size:16px;transition:all 0.15s;}
-.column-add:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-glow);}
-.column-body{padding:10px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:8px;min-height:60px;transition:background 0.15s;}
-.column-body.drag-over{background:rgba(108,99,255,0.04);border-radius:0 0 14px 14px;}
-
-/* ═══ Card ═══ */
-.task-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:grab;transition:all 0.15s;position:relative;user-select:none;}
-.task-card:hover{border-color:var(--border-hover);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,0.2);}
-.task-card.dragging{opacity:0.4;transform:rotate(2deg) scale(0.98);}
-.task-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:8px;}
-.product-badge{font-size:9px;font-weight:700;padding:3px 7px;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;}
-.product-badge[data-product="Flycart"]{background:rgba(31,135,255,0.15);color:var(--flycart);}
-.product-badge[data-product="Yuko"]{background:rgba(108,98,244,0.15);color:var(--yuko);}
-.product-badge[data-product="Retainful"]{background:rgba(247,90,27,0.15);color:var(--retainful);}
-.product-badge[data-product="WPLoyalty"]{background:rgba(81,73,235,0.15);color:var(--wployalty);}
-.product-badge[data-product="UpsellWP"]{background:rgba(4,55,133,0.25);color:#4d8ee0;}
-.product-badge[data-product="Spark Editor"]{background:rgba(22,82,54,0.25);color:#3dbb7a;}
-.product-badge[data-product="Other Works"]{background:rgba(100,116,139,0.15);color:var(--other);}
-.priority-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.priority-dot.high{background:#EF4444;box-shadow:0 0 6px #EF4444;}
-.priority-dot.medium{background:#F59E0B;}
-.priority-dot.low{background:#22C55E;}
-.task-title{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:4px;color:var(--text);}
-.task-desc{font-size:11px;color:var(--text-dim);line-height:1.5;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.task-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;}
-.task-tag{font-size:9px;padding:2px 7px;background:var(--bg-hover);border-radius:4px;color:var(--text-dim);font-weight:500;}
-.task-footer{display:flex;align-items:center;justify-content:space-between;padding-top:8px;border-top:1px solid var(--border);}
-.task-assignee{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--text-dim);}
-.task-due{font-size:10px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
-.task-due.overdue{color:#EF4444;}
-.task-due.soon{color:#F59E0B;}
-.task-meta{display:flex;align-items:center;gap:8px;}
-.task-comments-count{font-size:10px;color:var(--text-muted);}
-
-/* ═══ Modal ═══ */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.active{display:flex;}
-.modal{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;width:580px;max-width:95vw;max-height:90vh;overflow-y:auto;padding:28px;}
-.modal-title{font-size:18px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;}
-.modal-close{width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);cursor:pointer;font-size:16px;transition:all 0.15s;}
-.modal-close:hover{border-color:var(--danger);color:var(--danger);}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.form-group textarea{width:100%;padding:11px 14px;background:var(--bg-input);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;resize:vertical;min-height:72px;transition:border-color 0.2s,box-shadow 0.2s;}
-.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
-.tags-input-wrapper{display:flex;flex-wrap:wrap;gap:5px;padding:7px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:10px;min-height:42px;align-items:center;cursor:text;transition:border-color 0.2s,box-shadow 0.2s;}
-.tags-input-wrapper:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
-.tag-chip{display:flex;align-items:center;gap:4px;padding:2px 8px;background:var(--bg-hover);border-radius:4px;font-size:11px;color:var(--text-dim);}
-.tag-chip .remove-tag{cursor:pointer;color:var(--text-muted);font-size:14px;line-height:1;}
-.tag-chip .remove-tag:hover{color:var(--danger);}
-.tags-input-wrapper input{flex:1;min-width:70px;background:none;border:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;}
-.btn{padding:9px 18px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.15s;border:1px solid transparent;}
-.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent);}
-.btn-primary:hover{background:#5B54E6;}
-.btn-secondary{background:transparent;color:var(--text-dim);border-color:var(--border);}
-.btn-secondary:hover{border-color:var(--border-hover);color:var(--text);}
-.btn-danger{background:transparent;color:var(--danger);border-color:rgba(239,68,68,0.3);}
-.btn-danger:hover{background:rgba(239,68,68,0.1);}
+/* ─── Modal ─── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px}
+.overlay.on{display:flex}
+.modal{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;width:560px;max-width:95vw;max-height:90vh;overflow-y:auto;padding:26px}
+.modal-hd{font-size:17px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between}
+.modal-x{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--border);border-radius:7px;color:var(--text-dim);font-size:15px;transition:all .15s}
+.modal-x:hover{border-color:var(--danger);color:var(--danger)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:4px;padding:6px 10px;background:var(--bg-input);border:1px solid var(--border);border-radius:10px;min-height:40px;align-items:center;cursor:text;transition:border-color .2s,box-shadow .2s}
+.tags-wrap:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-g)}
+.chip{display:flex;align-items:center;gap:3px;padding:2px 7px;background:var(--bg-hover);border-radius:4px;font-size:11px;color:var(--text-dim)}
+.chip .rx{cursor:pointer;color:var(--text-muted);font-size:13px;line-height:1}
+.chip .rx:hover{color:var(--danger)}
+.tags-wrap input{flex:1;min-width:60px;background:none;border:none;color:var(--text);font-size:12px;outline:none}
+.mact{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.btn{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;border:1px solid transparent;transition:all .15s}
+.btn-p{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-p:hover{background:#5B54E6}
+.btn-s{background:transparent;color:var(--text-dim);border-color:var(--border)}
+.btn-s:hover{border-color:var(--border-h);color:var(--text)}
+.btn-d{background:transparent;color:var(--danger);border-color:rgba(239,68,68,.3)}
+.btn-d:hover{background:rgba(239,68,68,.1)}
 
 /* Comments */
-.comments-section{margin-top:14px;}
-.comments-section h4{font-size:12px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;}
-.comment{padding:9px 12px;background:var(--bg-input);border-radius:8px;margin-bottom:6px;}
-.comment-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;}
-.comment-author{font-size:11px;font-weight:600;color:var(--accent);}
-.comment-date{font-size:9px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;}
-.comment-text{font-size:12px;color:var(--text-dim);line-height:1.5;}
-.comment-input-row{display:flex;gap:8px;margin-top:8px;}
-.comment-input-row input{flex:1;padding:7px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;}
-.comment-input-row input:focus{border-color:var(--accent);}
-.comment-input-row button{padding:7px 14px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;}
+.cmt-sec{margin-top:14px}
+.cmt-sec h4{font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.cmt{padding:8px 11px;background:var(--bg-input);border-radius:7px;margin-bottom:5px}
+.cmt-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.cmt-who{font-size:11px;font-weight:600;color:var(--accent)}
+.cmt-dt{font-size:9px;color:var(--text-muted);font-family:'JetBrains Mono',monospace}
+.cmt-txt{font-size:12px;color:var(--text-dim);line-height:1.4}
+.cmt-add{display:flex;gap:6px;margin-top:8px}
+.cmt-add input{flex:1;padding:6px 10px;background:var(--bg-input);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:12px;outline:none}
+.cmt-add input:focus{border-color:var(--accent)}
+.cmt-add button{padding:6px 13px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-size:11px;font-weight:600;white-space:nowrap}
 
 /* Config */
-.config-section{margin-bottom:18px;}
-.config-section h4{font-size:12px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;}
-.member-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-.member-row input{flex:1;padding:7px 12px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;}
-.member-row .role-select{width:110px;padding:7px 8px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:11px;outline:none;}
-.member-remove{width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(239,68,68,0.3);border-radius:6px;color:var(--danger);cursor:pointer;font-size:14px;}
-.add-member-btn{display:flex;align-items:center;gap:6px;padding:7px 14px;background:transparent;border:1px dashed var(--border);border-radius:8px;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:11px;transition:all 0.15s;width:100%;justify-content:center;margin-top:4px;}
-.add-member-btn:hover{border-color:var(--accent);color:var(--accent);}
+.cfg-sec{margin-bottom:16px}
+.cfg-sec h4{font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.m-row{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.m-row input{flex:1;padding:6px 10px;background:var(--bg-input);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:12px;outline:none}
+.m-row select{width:100px;padding:6px;background:var(--bg-input);border:1px solid var(--border);border-radius:7px;color:var(--text);font-size:11px;outline:none}
+.m-row .m-del{width:26px;height:26px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(239,68,68,.3);border-radius:5px;color:var(--danger);font-size:13px}
+.m-add{display:flex;align-items:center;gap:5px;padding:6px 12px;background:transparent;border:1px dashed var(--border);border-radius:7px;color:var(--text-muted);font-size:11px;transition:all .15s;width:100%;justify-content:center;margin-top:4px}
+.m-add:hover{border-color:var(--accent);color:var(--accent)}
 
 /* Toast */
-.toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;font-size:13px;color:var(--text);z-index:2000;transform:translateY(80px);opacity:0;transition:all 0.3s;max-width:360px;}
-.toast.show{transform:translateY(0);opacity:1;}
-.toast.success{border-color:var(--success);}
-.toast.error{border-color:var(--danger);}
+.toast{position:fixed;bottom:20px;right:20px;padding:10px 18px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;font-size:12px;color:var(--text);z-index:2000;transform:translateY(80px);opacity:0;transition:all .3s;max-width:340px}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{border-color:var(--success)}
+.toast.error{border-color:var(--danger)}
 
-.empty-state{text-align:center;padding:28px 16px;color:var(--text-muted);font-size:11px;}
-
-/* Loading */
-.loading-spinner{display:inline-block;width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.6s linear infinite;margin-right:6px;vertical-align:middle;}
-@keyframes spin{to{transform:rotate(360deg);}}
+/* Loading overlay */
+.loading-bar{position:fixed;top:0;left:0;width:100%;height:3px;z-index:9999;display:none}
+.loading-bar.on{display:block}
+.loading-bar::after{content:'';display:block;height:100%;width:30%;background:var(--accent);border-radius:0 2px 2px 0;animation:loadbar 1.2s ease-in-out infinite}
+@keyframes loadbar{0%{width:0;margin-left:0}50%{width:60%}100%{width:0;margin-left:100%}}
 
 @media(max-width:768px){
-  .header{padding:10px 14px;}
-  .board{padding:14px;gap:12px;}
-  .column{min-width:280px;max-width:280px;}
-  .header-center{display:none;}
+  .header{padding:10px 12px}
+  .board{padding:12px;gap:10px}
+  .col{min-width:270px;max-width:270px}
+  .h-center{display:none}
 }
 </style>
 </head>
 <body>
 
-<!-- ═══════ LOGIN ═══════ -->
-<div id="login-screen">
+<!-- Loading bar -->
+<div class="loading-bar" id="loadbar"></div>
+
+<!-- ═══ LOGIN ═══ -->
+<div id="login">
   <div class="login-box">
-    <div class="login-logo">
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="10" fill="#6C63FF"/><path d="M10 12h6v2h-6zM10 16h10v2H10zM10 20h8v2h-8zM20 12h6v12h-6z" fill="white" opacity=".9"/><path d="M22 14h2v8h-2z" fill="#6C63FF"/></svg>
+    <div class="logo">
+      <svg width="34" height="34" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="10" fill="#6C63FF"/><path d="M10 12h6v2h-6zM10 16h10v2H10zM10 20h8v2h-8zM20 12h6v12h-6z" fill="white" opacity=".9"/><path d="M22 14h2v8h-2z" fill="#6C63FF"/></svg>
       <h1>Cartrabbit <span>Tasks</span></h1>
     </div>
-    <p class="login-subtitle">Team task management board</p>
+    <p class="subtitle">Team task management board</p>
 
-    <!-- Tabs -->
-    <div class="login-tabs">
-      <button class="login-tab active" onclick="switchLoginTab('login')">Sign In</button>
-      <button class="login-tab" onclick="switchLoginTab('connect')">Connect Board</button>
-      <button class="login-tab" onclick="switchLoginTab('setup')">New Board</button>
+    <div class="fg">
+      <label>Team Member</label>
+      <select id="l-user"><option value="">Loading members…</option></select>
     </div>
-
-    <!-- Tab 1: Login -->
-    <div class="tab-panel active" id="tab-login">
-      <div class="form-group">
-        <label>Team Member</label>
-        <select id="login-user"><option value="">Select your name…</option></select>
-      </div>
-      <div class="form-group">
-        <label>Password</label>
-        <input type="password" id="login-password" placeholder="Enter team password" autocomplete="current-password" onkeydown="if(event.key==='Enter')handleLogin()">
-      </div>
-      <button class="login-btn" onclick="handleLogin()">Sign In</button>
-      <p class="login-error" id="login-error"></p>
-      <p class="login-success" id="login-success"></p>
+    <div class="fg">
+      <label>Password</label>
+      <input type="password" id="l-pass" placeholder="Enter your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
-
-    <!-- Tab 2: Connect to Existing Board (for new team members) -->
-    <div class="tab-panel" id="tab-connect">
-      <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px;">Join an existing board. Ask your manager for the repo & token.</p>
-      <div class="form-group">
-        <label>GitHub Repository</label>
-        <input type="text" id="connect-repo" placeholder="owner/repo (e.g. YEGAPPAN-S/task-manager)">
-      </div>
-      <div class="form-group">
-        <label>GitHub Token</label>
-        <input type="password" id="connect-token" placeholder="ghp_xxxxx" autocomplete="off">
-        <div class="hint">Needs Contents read/write permission on this repo</div>
-      </div>
-      <div class="form-group">
-        <label>Data File Path</label>
-        <input type="text" id="connect-filepath" value="task.json">
-      </div>
-      <button class="login-btn" onclick="connectToBoard()" id="connect-btn">🔗 Connect & Pull Config</button>
-      <p class="login-error" id="connect-error"></p>
-      <p class="login-success" id="connect-success"></p>
-    </div>
-
-    <!-- Tab 3: Create New Board (first-time admin setup) -->
-    <div class="tab-panel" id="tab-setup">
-      <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px;">First-time setup — create a new task board.</p>
-      <div class="form-group">
-        <label>Team Password (shared across team)</label>
-        <input type="password" id="setup-password" placeholder="Strong password (min 6 chars)" autocomplete="off">
-      </div>
-      <div class="form-group">
-        <label>Your Name (admin)</label>
-        <input type="text" id="setup-admin-name" placeholder="e.g. Yega">
-      </div>
-      <div class="form-group">
-        <label>Team Members (comma separated, add more later)</label>
-        <input type="text" id="setup-members" placeholder="Priya, Ravi, Arun">
-        <div class="hint">You'll be added automatically as Manager</div>
-      </div>
-      <div class="login-divider">GitHub Config</div>
-      <div class="form-group">
-        <label>GitHub Repository</label>
-        <input type="text" id="setup-repo" placeholder="owner/repo">
-      </div>
-      <div class="form-group">
-        <label>GitHub Token</label>
-        <input type="password" id="setup-token" placeholder="ghp_xxxxx" autocomplete="off">
-      </div>
-      <button class="login-btn green" onclick="createNewBoard()" id="setup-btn">🚀 Create Board & Push to GitHub</button>
-      <p class="login-error" id="setup-error"></p>
-      <p class="login-success" id="setup-success"></p>
-    </div>
+    <button class="btn-login" id="l-btn" onclick="doLogin()">Sign In</button>
+    <div class="msg" id="l-msg"></div>
   </div>
 </div>
 
-<!-- ═══════ APP ═══════ -->
+<!-- ═══ APP ═══ -->
 <div id="app">
   <div class="header">
-    <div class="header-left">
-      <div class="header-logo">
-        <svg width="26" height="26" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="10" fill="#6C63FF"/><path d="M10 12h6v2h-6zM10 16h10v2H10zM10 20h8v2h-8zM20 12h6v12h-6z" fill="white" opacity=".9"/><path d="M22 14h2v8h-2z" fill="#6C63FF"/></svg>
+    <div class="h-left">
+      <div class="h-logo">
+        <svg width="24" height="24" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="10" fill="#6C63FF"/><path d="M10 12h6v2h-6zM10 16h10v2H10zM10 20h8v2h-8zM20 12h6v12h-6z" fill="white" opacity=".9"/><path d="M22 14h2v8h-2z" fill="#6C63FF"/></svg>
         <span>Tasks</span>
       </div>
-      <div class="search-box">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input type="text" placeholder="Search…" id="search-input" oninput="renderBoard()">
+      <div class="sbox">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Search…" id="search" oninput="renderBoard()">
       </div>
     </div>
-    <div class="header-center" id="product-filters"></div>
-    <div class="header-right">
-      <span class="sync-indicator" id="sync-status">● Ready</span>
-      <button class="icon-btn" onclick="syncFromGitHub(true)" title="Refresh from GitHub">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-      </button>
-      <button class="icon-btn" onclick="openConfigModal()" title="Settings" id="settings-btn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      </button>
-      <div class="user-badge">
-        <div class="user-avatar" id="header-avatar"></div>
-        <span id="header-username"></span>
-        <span id="header-role" style="font-size:9px;color:var(--text-muted);text-transform:uppercase;"></span>
-      </div>
-      <button class="icon-btn" onclick="handleLogout()" title="Logout">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      </button>
+    <div class="h-center" id="filters"></div>
+    <div class="h-right">
+      <span class="sync" id="sync-st">● Ready</span>
+      <button class="ibtn" onclick="refreshData()" title="Refresh"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+      <button class="ibtn" id="cfg-btn" onclick="openCfg()" title="Settings" style="display:none"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+      <div class="badge"><div class="avatar avatar-sm" id="h-av"></div><span id="h-name"></span></div>
+      <button class="ibtn" onclick="doLogout()" title="Logout"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
     </div>
   </div>
-
   <div class="board" id="board">
-    <div class="column" data-status="not-started">
-      <div class="column-header"><div class="column-title"><div class="column-dot"></div>Not Started <span class="column-count" data-count="not-started">0</span></div><button class="column-add" onclick="openTaskModal('not-started')">+</button></div>
-      <div class="column-body" data-status="not-started"></div>
+    <div class="col" data-s="not-started"><div class="col-head"><div class="col-title"><div class="col-dot"></div>Not Started<span class="col-cnt" data-c="not-started">0</span></div><button class="col-add" onclick="openTask('not-started')">+</button></div><div class="col-body" data-s="not-started"></div></div>
+    <div class="col" data-s="pending"><div class="col-head"><div class="col-title"><div class="col-dot"></div>Pending<span class="col-cnt" data-c="pending">0</span></div><button class="col-add" onclick="openTask('pending')">+</button></div><div class="col-body" data-s="pending"></div></div>
+    <div class="col" data-s="working"><div class="col-head"><div class="col-title"><div class="col-dot"></div>Working<span class="col-cnt" data-c="working">0</span></div><button class="col-add" onclick="openTask('working')">+</button></div><div class="col-body" data-s="working"></div></div>
+    <div class="col" data-s="completed"><div class="col-head"><div class="col-title"><div class="col-dot"></div>Completed<span class="col-cnt" data-c="completed">0</span></div><button class="col-add" onclick="openTask('completed')">+</button></div><div class="col-body" data-s="completed"></div></div>
+  </div>
+</div>
+
+<!-- ═══ TASK MODAL ═══ -->
+<div class="overlay" id="task-ov">
+  <div class="modal">
+    <div class="modal-hd"><span id="t-hd">New Task</span><button class="modal-x" onclick="closeTask()">✕</button></div>
+    <div class="fg"><label>Title</label><input type="text" id="t-title" placeholder="Task title…"></div>
+    <div class="fg"><label>Description</label><textarea id="t-desc" placeholder="Describe the task…"></textarea></div>
+    <div class="frow">
+      <div class="fg"><label>Product</label><select id="t-prod"><option>Flycart</option><option>Yuko</option><option>Retainful</option><option>WPLoyalty</option><option>UpsellWP</option><option>Spark Editor</option><option>Other Works</option></select></div>
+      <div class="fg"><label>Priority</label><select id="t-pri"><option value="high">🔴 High</option><option value="medium" selected>🟡 Medium</option><option value="low">🟢 Low</option></select></div>
     </div>
-    <div class="column" data-status="pending">
-      <div class="column-header"><div class="column-title"><div class="column-dot"></div>Pending <span class="column-count" data-count="pending">0</span></div><button class="column-add" onclick="openTaskModal('pending')">+</button></div>
-      <div class="column-body" data-status="pending"></div>
+    <div class="frow">
+      <div class="fg"><label>Assigned To</label><select id="t-assign"></select></div>
+      <div class="fg"><label>Due Date</label><input type="date" id="t-due"></div>
     </div>
-    <div class="column" data-status="working">
-      <div class="column-header"><div class="column-title"><div class="column-dot"></div>Working <span class="column-count" data-count="working">0</span></div><button class="column-add" onclick="openTaskModal('working')">+</button></div>
-      <div class="column-body" data-status="working"></div>
-    </div>
-    <div class="column" data-status="completed">
-      <div class="column-header"><div class="column-title"><div class="column-dot"></div>Completed <span class="column-count" data-count="completed">0</span></div><button class="column-add" onclick="openTaskModal('completed')">+</button></div>
-      <div class="column-body" data-status="completed"></div>
+    <div class="fg"><label>Status</label><select id="t-status"><option value="not-started">Not Started</option><option value="pending">Pending</option><option value="working">Working</option><option value="completed">Completed</option></select></div>
+    <div class="fg"><label>Tags (Enter to add)</label><div class="tags-wrap" id="t-tags" onclick="this.querySelector('input')?.focus()"><input type="text" id="t-tags-in" placeholder="Add tag…"></div></div>
+    <div class="cmt-sec" id="cmt-sec" style="display:none"><h4>Comments</h4><div id="cmt-list"></div><div class="cmt-add"><input type="text" id="cmt-in" placeholder="Add a comment…" onkeydown="if(event.key==='Enter')postComment()"><button onclick="postComment()">Post</button></div></div>
+    <div class="mact">
+      <button class="btn btn-d" id="t-del" style="display:none;margin-right:auto" onclick="delTask()">Delete</button>
+      <button class="btn btn-s" onclick="closeTask()">Cancel</button>
+      <button class="btn btn-p" id="t-save" onclick="saveTask()">Create Task</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════ TASK MODAL ═══════ -->
-<div class="modal-overlay" id="task-modal">
+<!-- ═══ CONFIG MODAL ═══ -->
+<div class="overlay" id="cfg-ov">
   <div class="modal">
-    <div class="modal-title"><span id="modal-title-text">New Task</span><button class="modal-close" onclick="closeTaskModal()">✕</button></div>
-    <div class="form-group"><label>Title</label><input type="text" id="task-title" placeholder="Task title…"></div>
-    <div class="form-group"><label>Description</label><textarea id="task-desc" placeholder="Describe the task…"></textarea></div>
-    <div class="form-row">
-      <div class="form-group"><label>Product</label><select id="task-product"><option value="Flycart">Flycart</option><option value="Yuko">Yuko</option><option value="Retainful">Retainful</option><option value="WPLoyalty">WPLoyalty</option><option value="UpsellWP">UpsellWP</option><option value="Spark Editor">Spark Editor</option><option value="Other Works">Other Works</option></select></div>
-      <div class="form-group"><label>Priority</label><select id="task-priority"><option value="high">🔴 High</option><option value="medium" selected>🟡 Medium</option><option value="low">🟢 Low</option></select></div>
-    </div>
-    <div class="form-row">
-      <div class="form-group"><label>Assigned To</label><select id="task-assignee"></select></div>
-      <div class="form-group"><label>Due Date</label><input type="date" id="task-due"></div>
-    </div>
-    <div class="form-group"><label>Status</label><select id="task-status"><option value="not-started">Not Started</option><option value="pending">Pending</option><option value="working">Working</option><option value="completed">Completed</option></select></div>
-    <div class="form-group"><label>Tags (press Enter to add)</label><div class="tags-input-wrapper" id="tags-wrapper" onclick="this.querySelector('input')?.focus()"><input type="text" id="tags-input" placeholder="Add tag…"></div></div>
-    <div class="comments-section" id="comments-section" style="display:none">
-      <h4>Comments</h4>
-      <div id="comments-list"></div>
-      <div class="comment-input-row">
-        <input type="text" id="comment-input" placeholder="Add a comment…" onkeydown="if(event.key==='Enter')addComment()">
-        <button onclick="addComment()">Post</button>
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-danger" id="delete-task-btn" style="display:none;margin-right:auto" onclick="deleteTask()">Delete</button>
-      <button class="btn btn-secondary" onclick="closeTaskModal()">Cancel</button>
-      <button class="btn btn-primary" id="save-task-btn" onclick="saveTask()">Create Task</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════ CONFIG MODAL ═══════ -->
-<div class="modal-overlay" id="config-modal">
-  <div class="modal">
-    <div class="modal-title"><span>⚙ Settings</span><button class="modal-close" onclick="closeConfigModal()">✕</button></div>
-    <div class="config-section">
-      <h4>GitHub Connection</h4>
-      <div class="form-group"><label>Repository</label><input type="text" id="config-repo" placeholder="owner/repo"></div>
-      <div class="form-group"><label>Token (local only — never synced)</label><input type="password" id="config-token" placeholder="ghp_xxxxx" autocomplete="off"></div>
-      <div class="form-group"><label>File Path</label><input type="text" id="config-filepath" value="task.json"></div>
-    </div>
-    <div class="config-section">
+    <div class="modal-hd"><span>⚙ Team Settings</span><button class="modal-x" onclick="closeCfg()">✕</button></div>
+    <div class="cfg-sec">
       <h4>Team Members</h4>
-      <div id="members-list"></div>
-      <button class="add-member-btn" id="add-member-btn" onclick="addMemberRow()">+ Add Member</button>
+      <p style="font-size:11px;color:var(--text-muted);margin-bottom:10px">Add members with their passwords. They can login from any device.</p>
+      <div id="m-list"></div>
+      <button class="m-add" onclick="addMemberRow()">+ Add Member</button>
     </div>
-    <div class="config-section">
-      <h4>Team Password</h4>
-      <div class="form-group"><input type="password" id="config-password" placeholder="Shared team password" autocomplete="off"></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-secondary" onclick="closeConfigModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="saveConfig()">Save & Sync to GitHub</button>
+    <div class="mact">
+      <button class="btn btn-s" onclick="closeCfg()">Cancel</button>
+      <button class="btn btn-p" id="cfg-save" onclick="saveCfg()">Save Members</button>
     </div>
   </div>
 </div>
@@ -426,813 +295,561 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════
-// CONSTANTS & STATE
-// ═══════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// ⚠️  PASTE YOUR APPS SCRIPT WEB APP URL BELOW  ⚠️
+// ═══════════════════════════════════════════════════
+const API = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+// Example: 'https://script.google.com/macros/s/AKfycb.../exec'
+
 const PRODUCTS = ['Flycart','Yuko','Retainful','WPLoyalty','UpsellWP','Spark Editor','Other Works'];
 const STATUSES = ['not-started','pending','working','completed'];
-const POLL_INTERVAL = 30000; // 30s auto-refresh
+const POLL = 30000; // 30s auto-refresh
 
-let state = {
+let S = {
+  user: null,
+  role: null,
+  members: [],
   tasks: [],
-  config: {
-    repo: '',
-    token: '',
-    filepath: 'task.json',
-    members: [],  // [{name, role}]
-    password: ''
-  },
-  currentUser: null,
-  currentRole: null,
-  activeProduct: null,
-  activeAssignee: null,
-  editingTaskId: null,
-  editingTags: [],
-  sha: null,
-  syncing: false,
-  pollTimer: null,
-  lastDragTime: 0
+  comments: [],
+  filterProd: null,
+  filterUser: null,
+  editId: null,
+  editTags: [],
+  lastDrag: 0,
+  timer: null
 };
+
+// ═══════════════════════════════════════
+// API CALLS
+// ═══════════════════════════════════════
+function loading(on) { document.getElementById('loadbar').classList.toggle('on', on); }
+
+async function apiGet(params) {
+  const url = API + '?' + new URLSearchParams(params).toString();
+  const r = await fetch(url);
+  return r.json();
+}
+
+async function apiPost(data) {
+  const r = await fetch(API, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(data)
+  });
+  return r.json();
+}
 
 // ═══════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════
-function escHtml(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
-function getInitials(n) { return (n||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
-function getMemberNames() { return state.config.members.map(m => typeof m === 'string' ? m : m.name); }
-function getMemberRole(name) {
-  const m = state.config.members.find(x => (typeof x === 'string' ? x : x.name) === name);
-  if (!m) return 'member';
-  return typeof m === 'string' ? 'member' : (m.role || 'member');
-}
-function isManager() { return state.currentRole === 'manager'; }
-function normalizeMember(m) { return typeof m === 'string' ? { name: m, role: 'member' } : m; }
-
-function showMsg(id, msg, type) {
-  const el = document.getElementById(id);
-  el.textContent = msg;
-  el.style.display = 'block';
-  el.className = type === 'success' ? 'login-success' : 'login-error';
-  el.style.display = 'block';
-}
-function hideMsg(id) { document.getElementById(id).style.display = 'none'; }
-
-function showToast(msg, type='') {
+function esc(s) { const d = document.createElement('div'); d.textContent = s||''; return d.innerHTML; }
+function initials(n) { return (n||'?').split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
+function names() { return S.members.map(m => m.name); }
+function isManager() { return S.role === 'manager'; }
+function toast(msg, type='') {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast show ' + type;
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => { t.className = 'toast'; }, 3500);
+  t.textContent = msg; t.className = 'toast show ' + type;
+  clearTimeout(t._t); t._t = setTimeout(() => t.className = 'toast', 3500);
+}
+function syncSt(cls, txt) {
+  const e = document.getElementById('sync-st');
+  e.className = 'sync ' + cls; e.textContent = '● ' + txt;
 }
 
 // ═══════════════════════════════════════
-// INIT
+// INIT — Load members for login dropdown
 // ═══════════════════════════════════════
-function init() {
-  loadLocal();
-  populateLoginDropdown();
+async function init() {
+  // Check if API is configured
+  if (API.includes('https://script.google.com/macros/s/AKfycbwEHQFNUmsjiooBR0bR_xxxXSLXppvqBSoKJBv_c1Ycr_4OIecTmVui5__LppOVBDYp/exec')) {
+    document.getElementById('l-user').innerHTML = '<option value="">⚠️ API URL not configured</option>';
+    document.getElementById('l-msg').className = 'msg err';
+    document.getElementById('l-msg').textContent = 'Edit index.html and set the API URL at the top of the <script> section.';
+    return;
+  }
 
-  // Pre-fill connect tab with saved config
-  if (state.config.repo) document.getElementById('connect-repo').value = state.config.repo;
-  if (state.config.filepath) document.getElementById('connect-filepath').value = state.config.filepath;
+  try {
+    const res = await apiGet({ action: 'members' });
+    if (res.success) {
+      S.members = res.members;
+      const sel = document.getElementById('l-user');
+      sel.innerHTML = '<option value="">Select your name…</option>' +
+        res.members.map(m => `<option value="${esc(m.name)}">${esc(m.name)}</option>`).join('');
+    } else {
+      throw new Error(res.error || 'Failed to load members');
+    }
+  } catch(e) {
+    document.getElementById('l-user').innerHTML = '<option value="">❌ Connection failed</option>';
+    document.getElementById('l-msg').className = 'msg err';
+    document.getElementById('l-msg').textContent = 'Cannot reach API: ' + e.message;
+  }
 
-  // Auto-login if session exists
-  const session = localStorage.getItem('cb_session');
-  if (session && state.config.password) {
-    state.currentUser = session;
-    state.currentRole = getMemberRole(session);
+  // Auto-login from session
+  const saved = sessionStorage.getItem('cb_user');
+  const savedRole = sessionStorage.getItem('cb_role');
+  if (saved && savedRole) {
+    S.user = saved;
+    S.role = savedRole;
     showApp();
   }
-}
-
-function loadLocal() {
-  try {
-    const c = localStorage.getItem('cb_config');
-    if (c) state.config = { ...state.config, ...JSON.parse(c) };
-    const t = localStorage.getItem('cb_tasks');
-    if (t) state.tasks = JSON.parse(t);
-  } catch(e) { console.error('Load error:', e); }
-}
-
-function saveLocal() {
-  localStorage.setItem('cb_config', JSON.stringify(state.config));
-  localStorage.setItem('cb_tasks', JSON.stringify(state.tasks));
-}
-
-function populateLoginDropdown() {
-  const sel = document.getElementById('login-user');
-  sel.innerHTML = '<option value="">Select your name…</option>';
-  getMemberNames().forEach(m => { sel.innerHTML += `<option value="${escHtml(m)}">${escHtml(m)}</option>`; });
-}
-
-// ═══════════════════════════════════════
-// LOGIN TABS
-// ═══════════════════════════════════════
-function switchLoginTab(tab) {
-  document.querySelectorAll('.login-tab').forEach((t,i) => {
-    t.classList.toggle('active', ['login','connect','setup'][i] === tab);
-  });
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
 }
 
 // ═══════════════════════════════════════
 // LOGIN
 // ═══════════════════════════════════════
-function handleLogin() {
-  hideMsg('login-error');
-  const user = document.getElementById('login-user').value;
-  const pw = document.getElementById('login-password').value;
+async function doLogin() {
+  const name = document.getElementById('l-user').value;
+  const pw = document.getElementById('l-pass').value;
+  const msgEl = document.getElementById('l-msg');
+  const btn = document.getElementById('l-btn');
 
-  if (!user) { showMsg('login-error', 'Please select your name.', 'error'); return; }
-  if (!state.config.password) {
-    showMsg('login-error', 'No board configured. Use "Connect Board" or "New Board" tab first.', 'error');
-    return;
-  }
-  if (pw !== state.config.password) {
-    showMsg('login-error', 'Invalid password.', 'error');
-    return;
-  }
+  msgEl.className = 'msg'; msgEl.textContent = '';
+  if (!name) { msgEl.className = 'msg err'; msgEl.textContent = 'Select your name'; return; }
+  if (!pw) { msgEl.className = 'msg err'; msgEl.textContent = 'Enter password'; return; }
 
-  state.currentUser = user;
-  state.currentRole = getMemberRole(user);
-  localStorage.setItem('cb_session', user);
-  showApp();
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Signing in…';
+
+  try {
+    const res = await apiGet({ action: 'login', name, password: pw });
+    if (res.success) {
+      S.user = res.name;
+      S.role = res.role;
+      sessionStorage.setItem('cb_user', res.name);
+      sessionStorage.setItem('cb_role', res.role);
+      showApp();
+    } else {
+      msgEl.className = 'msg err';
+      msgEl.textContent = res.error || 'Login failed';
+    }
+  } catch(e) {
+    msgEl.className = 'msg err';
+    msgEl.textContent = 'Connection error: ' + e.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  }
 }
 
-function handleLogout() {
-  state.currentUser = null;
-  state.currentRole = null;
-  localStorage.removeItem('cb_session');
-  clearInterval(state.pollTimer);
+function doLogout() {
+  S.user = null; S.role = null;
+  sessionStorage.clear();
+  clearInterval(S.timer);
   document.getElementById('app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('login-password').value = '';
+  document.getElementById('login').style.display = 'flex';
+  document.getElementById('l-pass').value = '';
 }
 
 // ═══════════════════════════════════════
-// CONNECT TO EXISTING BOARD
-// ═══════════════════════════════════════
-async function connectToBoard() {
-  hideMsg('connect-error');
-  const repo = document.getElementById('connect-repo').value.trim();
-  const token = document.getElementById('connect-token').value.trim();
-  const filepath = document.getElementById('connect-filepath').value.trim() || 'task.json';
-
-  if (!repo || !token) { showMsg('connect-error', 'Repo and token are required.', 'error'); return; }
-  if (!repo.includes('/')) { showMsg('connect-error', 'Use format: owner/repo', 'error'); return; }
-
-  const btn = document.getElementById('connect-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="loading-spinner"></span>Connecting…';
-
-  try {
-    const [owner, repoName] = repo.split('/');
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repoName}/contents/${filepath}`, {
-      headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-    });
-
-    if (res.status === 404) throw new Error('File not found. Check repo & filepath.');
-    if (res.status === 401) throw new Error('Invalid token. Check permissions.');
-    if (!res.ok) throw new Error(`GitHub error: HTTP ${res.status}`);
-
-    const data = await res.json();
-    state.sha = data.sha;
-    const content = JSON.parse(atob(data.content.replace(/\n/g, '')));
-
-    // Pull config from GitHub
-    if (content.config) {
-      state.config.members = content.config.members || [];
-      state.config.password = content.config.password || '';
-      state.config.filepath = content.config.filepath || filepath;
-    }
-    state.config.repo = repo;
-    state.config.token = token;
-    state.tasks = content.tasks || [];
-    saveLocal();
-    populateLoginDropdown();
-
-    showMsg('connect-success', `✅ Connected! Found ${getMemberNames().length} members. Switch to "Sign In" tab.`, 'success');
-    document.getElementById('connect-success').style.display = 'block';
-  } catch(err) {
-    showMsg('connect-error', err.message, 'error');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '🔗 Connect & Pull Config';
-  }
-}
-
-// ═══════════════════════════════════════
-// CREATE NEW BOARD
-// ═══════════════════════════════════════
-async function createNewBoard() {
-  hideMsg('setup-error');
-  const pw = document.getElementById('setup-password').value.trim();
-  const adminName = document.getElementById('setup-admin-name').value.trim();
-  const membersStr = document.getElementById('setup-members').value.trim();
-  const repo = document.getElementById('setup-repo').value.trim();
-  const token = document.getElementById('setup-token').value.trim();
-
-  if (!pw || pw.length < 6) { showMsg('setup-error', 'Password must be at least 6 characters.', 'error'); return; }
-  if (!adminName) { showMsg('setup-error', 'Enter your name.', 'error'); return; }
-  if (!repo || !repo.includes('/')) { showMsg('setup-error', 'Repo format: owner/repo', 'error'); return; }
-  if (!token) { showMsg('setup-error', 'GitHub token is required.', 'error'); return; }
-
-  const btn = document.getElementById('setup-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="loading-spinner"></span>Creating…';
-
-  // Build members list
-  const members = [{ name: adminName, role: 'manager' }];
-  if (membersStr) {
-    membersStr.split(',').map(m => m.trim()).filter(m => m && m !== adminName).forEach(m => {
-      members.push({ name: m, role: 'member' });
-    });
-  }
-
-  try {
-    const [owner, repoName] = repo.split('/');
-    const payload = {
-      tasks: [],
-      config: { members, password: pw, filepath: 'task.json' },
-      lastUpdated: new Date().toISOString(),
-      lastUpdatedBy: adminName
-    };
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
-
-    // Check if file already exists
-    let sha = null;
-    try {
-      const check = await fetch(`https://api.github.com/repos/${owner}/${repoName}/contents/task.json`, {
-        headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-      });
-      if (check.ok) {
-        const existing = await check.json();
-        sha = existing.sha;
-      }
-    } catch(e) {}
-
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repoName}/contents/task.json`, {
-      method: 'PUT',
-      headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
-      body: JSON.stringify({
-        message: `🚀 Board created by ${adminName}`,
-        content,
-        ...(sha ? { sha } : {})
-      })
-    });
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.message || `HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-    state.sha = data.content.sha;
-    state.config = { repo, token, filepath: 'task.json', members, password: pw };
-    state.tasks = [];
-    saveLocal();
-    populateLoginDropdown();
-
-    showMsg('setup-success', `✅ Board created with ${members.length} members! Switch to "Sign In" tab.`, 'success');
-    document.getElementById('setup-success').style.display = 'block';
-  } catch(err) {
-    showMsg('setup-error', err.message, 'error');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '🚀 Create Board & Push to GitHub';
-  }
-}
-
-// ═══════════════════════════════════════
-// SHOW APP
+// APP
 // ═══════════════════════════════════════
 async function showApp() {
-  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('login').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
+  document.getElementById('h-name').textContent = S.user;
+  document.getElementById('h-av').textContent = initials(S.user);
+  document.getElementById('cfg-btn').style.display = isManager() ? '' : 'none';
 
-  document.getElementById('header-username').textContent = state.currentUser;
-  document.getElementById('header-avatar').textContent = getInitials(state.currentUser);
-  document.getElementById('header-role').textContent = state.currentRole || '';
+  await refreshData();
 
-  // Only managers see settings
-  document.getElementById('settings-btn').style.display = isManager() ? '' : 'none';
+  // Auto-poll
+  clearInterval(S.timer);
+  S.timer = setInterval(() => refreshData(true), POLL);
+}
 
-  renderProductFilters();
-  await syncFromGitHub();
-  renderBoard();
+async function refreshData(silent = false) {
+  if (!silent) loading(true);
+  syncSt('load', 'Loading…');
 
-  // Start auto-poll
-  clearInterval(state.pollTimer);
-  state.pollTimer = setInterval(() => syncFromGitHub(false), POLL_INTERVAL);
+  try {
+    // Fetch members, tasks, and all comments in parallel
+    const [mRes, tRes, cRes] = await Promise.all([
+      apiGet({ action: 'members' }),
+      apiGet({ action: 'tasks' }),
+      apiGet({ action: 'allComments' })
+    ]);
+
+    if (mRes.success) S.members = mRes.members;
+    if (tRes.success) S.tasks = tRes.tasks;
+    if (cRes.success) S.comments = cRes.comments;
+
+    renderFilters();
+    renderBoard();
+    syncSt('ok', new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}));
+  } catch(e) {
+    syncSt('err', 'Failed');
+    if (!silent) toast('Refresh failed: ' + e.message, 'error');
+  } finally {
+    loading(false);
+  }
 }
 
 // ═══════════════════════════════════════
 // FILTERS
 // ═══════════════════════════════════════
-function renderProductFilters() {
-  const c = document.getElementById('product-filters');
-  let html = `<button class="filter-btn ${!state.activeProduct?'active':''}" onclick="setProductFilter(null)">All</button>`;
+function renderFilters() {
+  const c = document.getElementById('filters');
+  let h = `<button class="fbtn ${!S.filterProd?'on':''}" onclick="fProd(null)">All</button>`;
   PRODUCTS.forEach(p => {
-    html += `<button class="filter-btn ${state.activeProduct===p?'active':''}" data-product="${p}" onclick="setProductFilter('${p}')">${p}</button>`;
+    h += `<button class="fbtn ${S.filterProd===p?'on':''}" data-p="${p}" onclick="fProd('${p}')">${p}</button>`;
   });
-  const names = getMemberNames();
-  if (names.length > 1) {
-    html += `<div class="filter-sep"></div>`;
-    html += `<button class="filter-btn ${!state.activeAssignee?'active':''}" onclick="setAssigneeFilter(null)">👤 All</button>`;
-    names.forEach(m => {
-      html += `<button class="filter-btn ${state.activeAssignee===m?'active':''}" onclick="setAssigneeFilter('${escHtml(m)}')">${escHtml(m)}</button>`;
+  if (names().length > 1) {
+    h += `<div class="sep"></div><button class="fbtn ${!S.filterUser?'on':''}" onclick="fUser(null)">👤 All</button>`;
+    names().forEach(m => {
+      h += `<button class="fbtn ${S.filterUser===m?'on':''}" onclick="fUser('${esc(m)}')">${esc(m)}</button>`;
     });
   }
-  c.innerHTML = html;
+  c.innerHTML = h;
 }
-
-function setProductFilter(p) { state.activeProduct = p; renderProductFilters(); renderBoard(); }
-function setAssigneeFilter(a) { state.activeAssignee = a; renderProductFilters(); renderBoard(); }
+function fProd(p) { S.filterProd = p; renderFilters(); renderBoard(); }
+function fUser(u) { S.filterUser = u; renderFilters(); renderBoard(); }
 
 // ═══════════════════════════════════════
-// RENDER BOARD
+// BOARD
 // ═══════════════════════════════════════
 function renderBoard() {
-  const search = (document.getElementById('search-input')?.value || '').toLowerCase();
-  STATUSES.forEach(status => {
-    const body = document.querySelector(`.column-body[data-status="${status}"]`);
-    const countEl = document.querySelector(`[data-count="${status}"]`);
-
-    let tasks = state.tasks.filter(t => t.status === status);
-    if (state.activeProduct) tasks = tasks.filter(t => t.product === state.activeProduct);
-    if (state.activeAssignee) tasks = tasks.filter(t => t.assignee === state.activeAssignee);
-    if (search) tasks = tasks.filter(t =>
-      (t.title||'').toLowerCase().includes(search) ||
-      (t.description||'').toLowerCase().includes(search) ||
-      (t.product||'').toLowerCase().includes(search) ||
-      (t.assignee||'').toLowerCase().includes(search) ||
-      (t.tags||[]).some(tag => tag.toLowerCase().includes(search))
+  const q = (document.getElementById('search')?.value||'').toLowerCase();
+  STATUSES.forEach(st => {
+    const body = document.querySelector(`.col-body[data-s="${st}"]`);
+    const cnt = document.querySelector(`[data-c="${st}"]`);
+    let tasks = S.tasks.filter(t => t.status === st);
+    if (S.filterProd) tasks = tasks.filter(t => t.product === S.filterProd);
+    if (S.filterUser) tasks = tasks.filter(t => t.assignee === S.filterUser);
+    if (q) tasks = tasks.filter(t =>
+      (t.title||'').toLowerCase().includes(q) || (t.description||'').toLowerCase().includes(q) ||
+      (t.product||'').toLowerCase().includes(q) || (t.assignee||'').toLowerCase().includes(q) ||
+      (t.tags||[]).some(tg => tg.toLowerCase().includes(q))
     );
-
-    const pO = {high:0,medium:1,low:2};
+    const po = {high:0,medium:1,low:2};
     tasks.sort((a,b) => {
-      if (pO[a.priority] !== pO[b.priority]) return pO[a.priority] - pO[b.priority];
-      if (a.due && b.due) return new Date(a.due) - new Date(b.due);
-      return a.due ? -1 : b.due ? 1 : 0;
+      if (po[a.priority]!==po[b.priority]) return po[a.priority]-po[b.priority];
+      if (a.due&&b.due) return new Date(a.due)-new Date(b.due);
+      return a.due?-1:b.due?1:0;
     });
-
-    countEl.textContent = tasks.length;
-    body.innerHTML = tasks.length
-      ? tasks.map(t => renderTaskCard(t)).join('')
-      : '<div class="empty-state">No tasks</div>';
+    cnt.textContent = tasks.length;
+    body.innerHTML = tasks.length ? tasks.map(cardHtml).join('') : '<div class="empty">No tasks</div>';
   });
-
-  // Re-attach drag & drop
-  setupDragAndDrop();
+  bindCards();
 }
 
-function renderTaskCard(t) {
-  const dc = getDueClass(t.due), dt = t.due ? formatDate(t.due) : '', cc = (t.comments||[]).length;
-  return `<div class="task-card" draggable="true" data-id="${t.id}">
-    <div class="task-card-top">
-      <span class="product-badge" data-product="${t.product}">${t.product}</span>
-      <span class="priority-dot ${t.priority}" title="${t.priority} priority"></span>
-    </div>
-    <div class="task-title">${escHtml(t.title)}</div>
-    ${t.description ? `<div class="task-desc">${escHtml(t.description)}</div>` : ''}
-    ${(t.tags?.length) ? `<div class="task-tags">${t.tags.map(tg=>`<span class="task-tag">${escHtml(tg)}</span>`).join('')}</div>` : ''}
-    <div class="task-footer">
-      <div class="task-assignee"><div class="task-assignee-avatar">${getInitials(t.assignee)}</div>${escHtml(t.assignee||'Unassigned')}</div>
-      <div class="task-meta">
-        ${cc ? `<span class="task-comments-count">💬 ${cc}</span>` : ''}
-        ${dt ? `<span class="task-due ${dc}">${dt}</span>` : ''}
-      </div>
+function cardHtml(t) {
+  const dc = dueClass(t.due), dt = t.due ? fmtDate(t.due) : '';
+  const cc = S.comments.filter(c => c.taskId === t.id).length;
+  return `<div class="card" draggable="true" data-id="${t.id}">
+    <div class="card-top"><span class="pbadge" data-p="${t.product}">${t.product}</span><span class="pdot ${t.priority}" title="${t.priority}"></span></div>
+    <div class="card-title">${esc(t.title)}</div>
+    ${t.description?`<div class="card-desc">${esc(t.description)}</div>`:''}
+    ${t.tags?.length?`<div class="card-tags">${t.tags.map(tg=>`<span class="card-tag">${esc(tg)}</span>`).join('')}</div>`:''}
+    <div class="card-foot">
+      <div class="card-who"><div class="avatar avatar-xs">${initials(t.assignee)}</div>${esc(t.assignee||'—')}</div>
+      <div class="card-meta">${cc?`<span class="card-cmt">💬${cc}</span>`:''}${dt?`<span class="card-due ${dc}">${dt}</span>`:''}</div>
     </div>
   </div>`;
 }
-
-function getDueClass(d) {
+function dueClass(d) {
   if (!d) return '';
   const diff = (new Date(d).setHours(0,0,0,0) - new Date().setHours(0,0,0,0)) / 864e5;
-  return diff < 0 ? 'overdue' : diff <= 2 ? 'soon' : '';
+  return diff<0?'overdue':diff<=2?'soon':'';
 }
-
-function formatDate(d) {
+function fmtDate(d) {
   const dt = new Date(d);
-  return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][dt.getMonth()] + ' ' + dt.getDate();
+  return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][dt.getMonth()]+' '+dt.getDate();
 }
 
 // ═══════════════════════════════════════
-// DRAG & DROP (re-attached every render)
+// DRAG & DROP + CLICK
 // ═══════════════════════════════════════
-function setupDragAndDrop() {
-  // Cards
-  document.querySelectorAll('.task-card').forEach(card => {
-    card.addEventListener('dragstart', onDragStart);
-    card.addEventListener('dragend', onDragEnd);
-    card.addEventListener('click', onCardClick);
+let dragId = null;
+
+function bindCards() {
+  document.querySelectorAll('.card').forEach(c => {
+    c.addEventListener('dragstart', function(e) {
+      dragId = this.dataset.id;
+      this.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', dragId);
+      S.lastDrag = Date.now();
+    });
+    c.addEventListener('dragend', function() {
+      this.classList.remove('dragging');
+      document.querySelectorAll('.col-body').forEach(b => b.classList.remove('over'));
+    });
+    c.addEventListener('click', function() {
+      if (Date.now() - S.lastDrag < 300) return;
+      openEdit(this.dataset.id);
+    });
   });
-  // Columns
-  document.querySelectorAll('.column-body').forEach(col => {
-    col.addEventListener('dragover', onDragOver);
-    col.addEventListener('dragleave', onDragLeave);
-    col.addEventListener('drop', onDrop);
+  document.querySelectorAll('.col-body').forEach(b => {
+    b.ondragover = function(e) { e.preventDefault(); this.classList.add('over'); };
+    b.ondragleave = function() { this.classList.remove('over'); };
+    b.ondrop = async function(e) {
+      e.preventDefault(); this.classList.remove('over');
+      const ns = this.dataset.s;
+      if (!dragId || !ns) return;
+      const task = S.tasks.find(t => t.id === dragId);
+      if (task && task.status !== ns) {
+        task.status = ns;
+        task.updatedBy = S.user;
+        renderBoard();
+        await apiPost({ action: 'saveTask', task });
+        syncSt('ok', 'Saved');
+      }
+      dragId = null;
+    };
   });
-}
-
-let draggedId = null;
-
-function onDragStart(e) {
-  draggedId = this.dataset.id;
-  this.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/plain', draggedId);
-  state.lastDragTime = Date.now();
-}
-
-function onDragEnd(e) {
-  this.classList.remove('dragging');
-  document.querySelectorAll('.column-body').forEach(c => c.classList.remove('drag-over'));
-}
-
-function onCardClick(e) {
-  // Don't open edit if we just finished dragging (within 300ms)
-  if (Date.now() - state.lastDragTime < 300) return;
-  openEditTask(this.dataset.id);
-}
-
-function onDragOver(e) { e.preventDefault(); this.classList.add('drag-over'); }
-function onDragLeave(e) { this.classList.remove('drag-over'); }
-
-function onDrop(e) {
-  e.preventDefault();
-  this.classList.remove('drag-over');
-  const newStatus = this.dataset.status;
-  if (!draggedId || !newStatus) return;
-  const task = state.tasks.find(t => t.id === draggedId);
-  if (task && task.status !== newStatus) {
-    task.status = newStatus;
-    task.updatedAt = new Date().toISOString();
-    task.updatedBy = state.currentUser;
-    renderBoard();
-    syncToGitHub();
-  }
-  draggedId = null;
 }
 
 // ═══════════════════════════════════════
 // TASK MODAL
 // ═══════════════════════════════════════
-function openTaskModal(status) {
-  state.editingTaskId = null;
-  state.editingTags = [];
-  document.getElementById('modal-title-text').textContent = 'New Task';
-  document.getElementById('task-title').value = '';
-  document.getElementById('task-desc').value = '';
-  document.getElementById('task-product').value = 'Flycart';
-  document.getElementById('task-priority').value = 'medium';
-  document.getElementById('task-status').value = status || 'not-started';
-  document.getElementById('task-due').value = '';
-  document.getElementById('delete-task-btn').style.display = 'none';
-  document.getElementById('save-task-btn').textContent = 'Create Task';
-  document.getElementById('comments-section').style.display = 'none';
-  populateAssigneeDropdown();
-  renderTagsInput();
-  document.getElementById('task-modal').classList.add('active');
-  document.getElementById('task-title').focus();
+function openTask(status) {
+  S.editId = null; S.editTags = [];
+  document.getElementById('t-hd').textContent = 'New Task';
+  document.getElementById('t-title').value = '';
+  document.getElementById('t-desc').value = '';
+  document.getElementById('t-prod').value = 'Flycart';
+  document.getElementById('t-pri').value = 'medium';
+  document.getElementById('t-status').value = status || 'not-started';
+  document.getElementById('t-due').value = '';
+  document.getElementById('t-del').style.display = 'none';
+  document.getElementById('t-save').textContent = 'Create Task';
+  document.getElementById('cmt-sec').style.display = 'none';
+  fillAssignees();
+  renderTags();
+  document.getElementById('task-ov').classList.add('on');
+  document.getElementById('t-title').focus();
 }
 
-function openEditTask(id) {
-  const task = state.tasks.find(t => t.id === id);
-  if (!task) return;
-  state.editingTaskId = id;
-  state.editingTags = [...(task.tags || [])];
-
-  document.getElementById('modal-title-text').textContent = 'Edit Task';
-  document.getElementById('task-title').value = task.title || '';
-  document.getElementById('task-desc').value = task.description || '';
-  document.getElementById('task-product').value = task.product || 'Flycart';
-  document.getElementById('task-priority').value = task.priority || 'medium';
-  document.getElementById('task-status').value = task.status || 'not-started';
-  document.getElementById('task-due').value = task.due || '';
-
-  // Only managers or task creator/assignee can delete
-  const canDelete = isManager() || task.createdBy === state.currentUser;
-  document.getElementById('delete-task-btn').style.display = canDelete ? 'block' : 'none';
-  document.getElementById('save-task-btn').textContent = 'Update Task';
-
-  populateAssigneeDropdown();
-  document.getElementById('task-assignee').value = task.assignee || '';
-  renderTagsInput();
-
-  document.getElementById('comments-section').style.display = 'block';
-  renderComments(task);
-  document.getElementById('task-modal').classList.add('active');
+function openEdit(id) {
+  const t = S.tasks.find(x => x.id === id);
+  if (!t) return;
+  S.editId = id;
+  S.editTags = [...(t.tags||[])];
+  document.getElementById('t-hd').textContent = 'Edit Task';
+  document.getElementById('t-title').value = t.title||'';
+  document.getElementById('t-desc').value = t.description||'';
+  document.getElementById('t-prod').value = t.product||'Flycart';
+  document.getElementById('t-pri').value = t.priority||'medium';
+  document.getElementById('t-status').value = t.status||'not-started';
+  document.getElementById('t-due').value = t.due||'';
+  const canDel = isManager() || t.createdBy === S.user;
+  document.getElementById('t-del').style.display = canDel ? 'block' : 'none';
+  document.getElementById('t-save').textContent = 'Update Task';
+  fillAssignees();
+  document.getElementById('t-assign').value = t.assignee||'';
+  renderTags();
+  // Comments
+  const cmts = S.comments.filter(c => c.taskId === id);
+  document.getElementById('cmt-sec').style.display = 'block';
+  document.getElementById('cmt-list').innerHTML = cmts.map(c => `
+    <div class="cmt"><div class="cmt-hd"><span class="cmt-who">${esc(c.author)}</span><span class="cmt-dt">${new Date(c.date).toLocaleDateString()}</span></div><div class="cmt-txt">${esc(c.text)}</div></div>
+  `).join('') || '<div class="empty">No comments yet</div>';
+  document.getElementById('cmt-in').value = '';
+  document.getElementById('task-ov').classList.add('on');
 }
 
-function closeTaskModal() {
-  document.getElementById('task-modal').classList.remove('active');
-  state.editingTaskId = null;
-}
+function closeTask() { document.getElementById('task-ov').classList.remove('on'); S.editId = null; }
 
-function populateAssigneeDropdown() {
-  const s = document.getElementById('task-assignee');
-  s.innerHTML = getMemberNames().map(m => `<option value="${escHtml(m)}">${escHtml(m)}</option>`).join('');
+function fillAssignees() {
+  document.getElementById('t-assign').innerHTML = names().map(m => `<option value="${esc(m)}">${esc(m)}</option>`).join('');
 }
 
 // Tags
-function renderTagsInput() {
-  const w = document.getElementById('tags-wrapper');
-  w.innerHTML = state.editingTags.map((t,i) =>
-    `<span class="tag-chip">${escHtml(t)} <span class="remove-tag" onclick="event.stopPropagation();removeTag(${i})">×</span></span>`
-  ).join('') + '<input type="text" id="tags-input" placeholder="Add tag…" onkeydown="handleTagKey(event)">';
+function renderTags() {
+  const w = document.getElementById('t-tags');
+  w.innerHTML = S.editTags.map((t,i) =>
+    `<span class="chip">${esc(t)}<span class="rx" onclick="event.stopPropagation();rmTag(${i})">×</span></span>`
+  ).join('') + '<input type="text" id="t-tags-in" placeholder="Add tag…" onkeydown="tagKey(event)">';
 }
-function handleTagKey(e) {
+function tagKey(e) {
   if (e.key === 'Enter') {
     e.preventDefault();
     const v = e.target.value.trim();
-    if (v && !state.editingTags.includes(v)) { state.editingTags.push(v); renderTagsInput(); }
+    if (v && !S.editTags.includes(v)) { S.editTags.push(v); renderTags(); }
   }
 }
-function removeTag(i) { state.editingTags.splice(i, 1); renderTagsInput(); }
+function rmTag(i) { S.editTags.splice(i, 1); renderTags(); }
 
-// Comments
-function renderComments(task) {
-  const l = document.getElementById('comments-list');
-  l.innerHTML = (task.comments || []).map(c => `
-    <div class="comment">
-      <div class="comment-header"><span class="comment-author">${escHtml(c.author)}</span><span class="comment-date">${new Date(c.date).toLocaleDateString()}</span></div>
-      <div class="comment-text">${escHtml(c.text)}</div>
-    </div>`).join('');
-  document.getElementById('comment-input').value = '';
-}
-
-function addComment() {
-  if (!state.editingTaskId) return;
-  const text = document.getElementById('comment-input').value.trim();
+// Comment
+async function postComment() {
+  if (!S.editId) return;
+  const text = document.getElementById('cmt-in').value.trim();
   if (!text) return;
-  const task = state.tasks.find(t => t.id === state.editingTaskId);
-  if (!task) return;
-  if (!task.comments) task.comments = [];
-  task.comments.push({ author: state.currentUser, text, date: new Date().toISOString() });
-  renderComments(task);
-  syncToGitHub();
+  document.getElementById('cmt-in').value = '';
+
+  try {
+    const res = await apiPost({ action: 'addComment', taskId: S.editId, author: S.user, text });
+    if (res.success && res.comment) {
+      S.comments.push(res.comment);
+      // Re-render comments in modal
+      const cmts = S.comments.filter(c => c.taskId === S.editId);
+      document.getElementById('cmt-list').innerHTML = cmts.map(c => `
+        <div class="cmt"><div class="cmt-hd"><span class="cmt-who">${esc(c.author)}</span><span class="cmt-dt">${new Date(c.date).toLocaleDateString()}</span></div><div class="cmt-txt">${esc(c.text)}</div></div>
+      `).join('');
+      renderBoard(); // Update comment count on cards
+      toast('Comment added', 'success');
+    }
+  } catch(e) {
+    toast('Failed to add comment', 'error');
+  }
 }
 
-// Save Task
-function saveTask() {
-  const title = document.getElementById('task-title').value.trim();
-  if (!title) { showToast('Please enter a title', 'error'); return; }
+// Save
+async function saveTask() {
+  const title = document.getElementById('t-title').value.trim();
+  if (!title) { toast('Enter a title', 'error'); return; }
 
-  const td = {
+  const btn = document.getElementById('t-save');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Saving…';
+
+  const task = {
     title,
-    description: document.getElementById('task-desc').value.trim(),
-    product: document.getElementById('task-product').value,
-    priority: document.getElementById('task-priority').value,
-    assignee: document.getElementById('task-assignee').value,
-    status: document.getElementById('task-status').value,
-    due: document.getElementById('task-due').value || null,
-    tags: [...state.editingTags],
-    updatedAt: new Date().toISOString(),
-    updatedBy: state.currentUser
+    description: document.getElementById('t-desc').value.trim(),
+    product: document.getElementById('t-prod').value,
+    priority: document.getElementById('t-pri').value,
+    assignee: document.getElementById('t-assign').value,
+    status: document.getElementById('t-status').value,
+    due: document.getElementById('t-due').value || '',
+    tags: [...S.editTags],
+    updatedBy: S.user
   };
 
-  if (state.editingTaskId) {
-    const idx = state.tasks.findIndex(t => t.id === state.editingTaskId);
-    if (idx !== -1) state.tasks[idx] = { ...state.tasks[idx], ...td };
-    showToast('Task updated!', 'success');
+  if (S.editId) {
+    task.id = S.editId;
   } else {
-    td.id = 'task_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
-    td.createdAt = new Date().toISOString();
-    td.createdBy = state.currentUser;
-    td.comments = [];
-    state.tasks.push(td);
-    showToast('Task created!', 'success');
+    task.createdBy = S.user;
   }
 
-  closeTaskModal();
-  renderBoard();
-  syncToGitHub();
+  try {
+    const res = await apiPost({ action: 'saveTask', task });
+    if (res.success) {
+      if (S.editId) {
+        const idx = S.tasks.findIndex(t => t.id === S.editId);
+        if (idx !== -1) S.tasks[idx] = { ...S.tasks[idx], ...task, ...res.task };
+      } else if (res.task) {
+        S.tasks.push(res.task);
+      }
+      closeTask();
+      renderBoard();
+      toast(S.editId ? 'Task updated!' : 'Task created!', 'success');
+    } else {
+      toast(res.error || 'Save failed', 'error');
+    }
+  } catch(e) {
+    toast('Save failed: ' + e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = S.editId ? 'Update Task' : 'Create Task';
+  }
 }
 
-function deleteTask() {
-  if (!state.editingTaskId || !confirm('Delete this task permanently?')) return;
-  state.tasks = state.tasks.filter(t => t.id !== state.editingTaskId);
-  closeTaskModal();
-  renderBoard();
-  syncToGitHub();
-  showToast('Task deleted', 'success');
+async function delTask() {
+  if (!S.editId || !confirm('Delete this task permanently?')) return;
+  try {
+    const res = await apiPost({ action: 'deleteTask', id: S.editId });
+    if (res.success) {
+      S.tasks = S.tasks.filter(t => t.id !== S.editId);
+      S.comments = S.comments.filter(c => c.taskId !== S.editId);
+      closeTask();
+      renderBoard();
+      toast('Task deleted', 'success');
+    } else {
+      toast(res.error || 'Delete failed', 'error');
+    }
+  } catch(e) {
+    toast('Delete failed: ' + e.message, 'error');
+  }
 }
 
 // ═══════════════════════════════════════
-// SETTINGS MODAL (Managers only)
+// SETTINGS (Manager only)
 // ═══════════════════════════════════════
-function openConfigModal() {
-  if (!isManager()) { showToast('Only managers can access settings', 'error'); return; }
-  document.getElementById('config-repo').value = state.config.repo || '';
-  document.getElementById('config-token').value = state.config.token || '';
-  document.getElementById('config-filepath').value = state.config.filepath || 'task.json';
-  document.getElementById('config-password').value = state.config.password || '';
-  renderMembersList();
-  document.getElementById('config-modal').classList.add('active');
+let cfgMembers = [];
+
+function openCfg() {
+  if (!isManager()) { toast('Managers only', 'error'); return; }
+  cfgMembers = S.members.map(m => ({ ...m, password: '', isNew: false }));
+  renderMembers();
+  document.getElementById('cfg-ov').classList.add('on');
 }
+function closeCfg() { document.getElementById('cfg-ov').classList.remove('on'); }
 
-function closeConfigModal() { document.getElementById('config-modal').classList.remove('active'); }
-
-function renderMembersList() {
-  const l = document.getElementById('members-list');
-  l.innerHTML = state.config.members.map((m, i) => {
-    const member = normalizeMember(m);
-    return `<div class="member-row">
-      <input type="text" value="${escHtml(member.name)}" data-member-idx="${i}" placeholder="Name">
-      <select class="role-select" data-role-idx="${i}">
-        <option value="manager" ${member.role==='manager'?'selected':''}>Manager</option>
-        <option value="member" ${member.role!=='manager'?'selected':''}>Member</option>
-      </select>
-      <button class="member-remove" onclick="removeMember(${i})">×</button>
-    </div>`;
-  }).join('');
+function renderMembers() {
+  document.getElementById('m-list').innerHTML = cfgMembers.map((m, i) => `
+    <div class="m-row">
+      <input type="text" value="${esc(m.name)}" placeholder="Name" data-mi="${i}" ${m.isNew?'':'readonly'} style="${m.isNew?'':'opacity:.7'}">
+      <input type="text" value="${esc(m.password||'')}" placeholder="${m.isNew?'Password':'New password (optional)'}" data-mp="${i}">
+      <select data-mr="${i}"><option value="manager" ${m.role==='manager'?'selected':''}>Manager</option><option value="member" ${m.role!=='manager'?'selected':''}>Member</option></select>
+      <button class="m-del" onclick="rmMember(${i})" ${m.name===S.user?'disabled style="opacity:.3"':''}>×</button>
+    </div>
+  `).join('');
 }
 
 function addMemberRow() {
-  state.config.members.push({ name: '', role: 'member' });
-  renderMembersList();
-  // Focus the new input
+  cfgMembers.push({ name: '', password: '', role: 'member', isNew: true });
+  renderMembers();
   setTimeout(() => {
-    const inputs = document.querySelectorAll('[data-member-idx]');
-    inputs[inputs.length - 1]?.focus();
+    const inputs = document.querySelectorAll('[data-mi]');
+    inputs[inputs.length-1]?.focus();
   }, 50);
 }
 
-function removeMember(i) {
-  if (state.config.members.length <= 1) { showToast('Need at least 1 member', 'error'); return; }
-  const member = normalizeMember(state.config.members[i]);
-  if (member.name === state.currentUser) { showToast("Can't remove yourself", 'error'); return; }
-  state.config.members.splice(i, 1);
-  renderMembersList();
+function rmMember(i) {
+  if (cfgMembers[i].name === S.user) return;
+  cfgMembers.splice(i, 1);
+  renderMembers();
 }
 
-function saveConfig() {
-  // Gather members from DOM
-  const newMembers = [];
-  document.querySelectorAll('[data-member-idx]').forEach(inp => {
-    const i = parseInt(inp.dataset.memberIdx);
-    const name = inp.value.trim();
-    const roleEl = document.querySelector(`[data-role-idx="${i}"]`);
-    const role = roleEl ? roleEl.value : 'member';
-    if (name) newMembers.push({ name, role });
-  });
-
-  if (newMembers.length === 0) { showToast('Need at least 1 member', 'error'); return; }
-  if (!newMembers.some(m => m.role === 'manager')) { showToast('Need at least 1 manager', 'error'); return; }
-
-  state.config.members = newMembers;
-  state.config.repo = document.getElementById('config-repo').value.trim();
-  state.config.token = document.getElementById('config-token').value.trim();
-  state.config.filepath = document.getElementById('config-filepath').value.trim() || 'task.json';
-  state.config.password = document.getElementById('config-password').value;
-
-  // Update current user's role
-  state.currentRole = getMemberRole(state.currentUser);
-
-  saveLocal();
-  populateLoginDropdown();
-  renderProductFilters();
-  closeConfigModal();
-
-  // Push to GitHub so all team members get updated config
-  syncToGitHub();
-  showToast('Settings saved & synced!', 'success');
-}
-
-// ═══════════════════════════════════════
-// GITHUB SYNC
-// ═══════════════════════════════════════
-function setSyncStatus(cls, text) {
-  const el = document.getElementById('sync-status');
-  el.className = 'sync-indicator ' + cls;
-  el.textContent = '● ' + text;
-}
-
-async function syncFromGitHub(showFeedback = false) {
-  if (!state.config.repo || !state.config.token) {
-    setSyncStatus('', 'No config');
-    return;
-  }
-  if (state.syncing) return;
-  state.syncing = true;
-
-  if (showFeedback) setSyncStatus('syncing', 'Pulling…');
+async function saveCfg() {
+  const btn = document.getElementById('cfg-save');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Saving…';
 
   try {
-    const [owner, repo] = state.config.repo.split('/');
-    const res = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/contents/${state.config.filepath}`,
-      { headers: { 'Authorization': `token ${state.config.token}`, 'Accept': 'application/vnd.github.v3+json' } }
-    );
+    for (let i = 0; i < cfgMembers.length; i++) {
+      const nameEl = document.querySelector(`[data-mi="${i}"]`);
+      const passEl = document.querySelector(`[data-mp="${i}"]`);
+      const roleEl = document.querySelector(`[data-mr="${i}"]`);
+      const name = nameEl ? nameEl.value.trim() : cfgMembers[i].name;
+      const password = passEl ? passEl.value.trim() : '';
+      const role = roleEl ? roleEl.value : cfgMembers[i].role;
 
-    if (res.status === 404) {
-      state.tasks = []; state.sha = null;
-      setSyncStatus('synced', 'Empty board');
-      saveLocal(); renderBoard();
-      return;
-    }
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!name) continue;
 
-    const data = await res.json();
-
-    // Only update if SHA changed (new data)
-    if (data.sha === state.sha && !showFeedback) { state.syncing = false; return; }
-
-    state.sha = data.sha;
-    const content = JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g, '')))));
-
-    if (Array.isArray(content)) {
-      state.tasks = content;
-    } else {
-      state.tasks = content.tasks || [];
-      if (content.config) {
-        const localToken = state.config.token;
-        const localRepo = state.config.repo;
-        state.config = { ...state.config, ...content.config, token: localToken, repo: localRepo };
-        state.currentRole = getMemberRole(state.currentUser);
+      if (cfgMembers[i].isNew) {
+        // Add new member
+        if (!password) { toast(`Password required for ${name}`, 'error'); btn.disabled=false; btn.textContent='Save Members'; return; }
+        const res = await apiPost({ action: 'addMember', member: { name, password, role } });
+        if (!res.success) { toast(res.error || `Failed to add ${name}`, 'error'); }
+      } else {
+        // Update existing member (password and/or role)
+        const update = { name, role };
+        if (password) update.password = password;
+        await apiPost({ action: 'updateMember', member: update });
       }
     }
 
-    saveLocal();
-    populateLoginDropdown();
-    renderProductFilters();
-    renderBoard();
-    setSyncStatus('synced', 'Synced ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}));
-    if (showFeedback) showToast('Board refreshed!', 'success');
-  } catch(err) {
-    console.error('Pull error:', err);
-    setSyncStatus('error', 'Pull failed');
-    if (showFeedback) showToast('Pull failed: ' + err.message, 'error');
-  } finally {
-    state.syncing = false;
-  }
-}
-
-async function syncToGitHub(retryCount = 0) {
-  saveLocal();
-  if (!state.config.repo || !state.config.token) return;
-  if (state.syncing && retryCount === 0) {
-    // Queue sync after current one finishes
-    setTimeout(() => syncToGitHub(), 1000);
-    return;
-  }
-
-  state.syncing = true;
-  setSyncStatus('syncing', 'Pushing…');
-
-  try {
-    const [owner, repo] = state.config.repo.split('/');
-    const payload = {
-      tasks: state.tasks,
-      config: {
-        members: state.config.members,
-        password: state.config.password,
-        filepath: state.config.filepath
-      },
-      lastUpdated: new Date().toISOString(),
-      lastUpdatedBy: state.currentUser
-    };
-
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
-    const body = {
-      message: `📋 Update by ${state.currentUser} — ${new Date().toLocaleString()}`,
-      content,
-      ...(state.sha ? { sha: state.sha } : {})
-    };
-
-    const res = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/contents/${state.config.filepath}`,
-      {
-        method: 'PUT',
-        headers: { 'Authorization': `token ${state.config.token}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
-        body: JSON.stringify(body)
+    // Handle removals
+    const currentNames = [];
+    for (let i = 0; i < cfgMembers.length; i++) {
+      const nameEl = document.querySelector(`[data-mi="${i}"]`);
+      currentNames.push(nameEl ? nameEl.value.trim() : cfgMembers[i].name);
+    }
+    for (const m of S.members) {
+      if (!currentNames.includes(m.name)) {
+        await apiPost({ action: 'removeMember', name: m.name });
       }
-    );
-
-    if (res.status === 409 && retryCount < 3) {
-      // SHA conflict — pull fresh and retry
-      console.warn('SHA conflict, retrying…');
-      state.syncing = false;
-      await syncFromGitHub();
-      return syncToGitHub(retryCount + 1);
     }
 
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.message || `HTTP ${res.status}`);
-    }
-
-    const data = await res.json();
-    state.sha = data.content.sha;
-    setSyncStatus('synced', 'Synced ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}));
-  } catch(err) {
-    console.error('Push error:', err);
-    setSyncStatus('error', 'Push failed');
-    showToast('Sync failed: ' + err.message, 'error');
+    closeCfg();
+    toast('Members updated!', 'success');
+    await refreshData();
+  } catch(e) {
+    toast('Save failed: ' + e.message, 'error');
   } finally {
-    state.syncing = false;
+    btn.disabled = false;
+    btn.textContent = 'Save Members';
   }
 }
 
@@ -1240,9 +857,8 @@ async function syncToGitHub(retryCount = 0) {
 // KEYBOARD
 // ═══════════════════════════════════════
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeTaskModal(); closeConfigModal(); }
-  if ((e.ctrlKey || e.metaKey) && e.key === 'n') { e.preventDefault(); openTaskModal('not-started'); }
-  if ((e.ctrlKey || e.metaKey) && e.key === 'r' && !e.shiftKey) { e.preventDefault(); syncFromGitHub(true); }
+  if (e.key === 'Escape') { closeTask(); closeCfg(); }
+  if ((e.ctrlKey||e.metaKey) && e.key === 'n') { e.preventDefault(); openTask('not-started'); }
 });
 
 // ═══════════════════════════════════════
