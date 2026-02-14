@@ -1,10 +1,61 @@
 {
-  "tasks": [],
+  "tasks": [
+    {
+      "title": "Mail Automation",
+      "description": "",
+      "product": "UpsellWP",
+      "priority": "high",
+      "assignee": "Yega",
+      "status": "working",
+      "due": null,
+      "tags": [],
+      "updatedAt": "2026-02-14T07:07:32.711Z",
+      "updatedBy": "Yega",
+      "id": "task_mllz533d_6rggux",
+      "createdAt": "2026-02-14T07:07:32.713Z",
+      "createdBy": "Yega",
+      "comments": []
+    },
+    {
+      "title": "Test Task",
+      "description": "",
+      "product": "Flycart",
+      "priority": "medium",
+      "assignee": "Yega",
+      "status": "not-started",
+      "due": null,
+      "tags": [],
+      "updatedAt": "2026-02-14T07:08:22.501Z",
+      "updatedBy": "Yega",
+      "id": "task_mllz65id_sue8xa",
+      "createdAt": "2026-02-14T07:08:22.501Z",
+      "createdBy": "Yega",
+      "comments": []
+    },
+    {
+      "title": "test 1",
+      "description": "",
+      "product": "Flycart",
+      "priority": "medium",
+      "assignee": "Yega",
+      "status": "not-started",
+      "due": null,
+      "tags": [],
+      "updatedAt": "2026-02-14T07:11:26.449Z",
+      "updatedBy": "Yega",
+      "id": "task_mllza3g1_4lr7zj",
+      "createdAt": "2026-02-14T07:11:26.449Z",
+      "createdBy": "Yega",
+      "comments": []
+    }
+  ],
   "config": {
-    "members": ["Yega"],
+    "members": [
+      "Yega"
+    ],
     "password": "zqTN$3ot!hG0",
     "filepath": "task.json"
   },
-  "lastUpdated": "",
-  "lastUpdatedBy": ""
+  "lastUpdated": "2026-02-14T07:11:26.449Z",
+  "lastUpdatedBy": "Yega"
 }
