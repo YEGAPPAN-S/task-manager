@@ -298,7 +298,7 @@ input,select,textarea{font-family:'DM Sans',sans-serif}
 // ═══════════════════════════════════════════════════
 // ⚠️  PASTE YOUR APPS SCRIPT WEB APP URL BELOW  ⚠️
 // ═══════════════════════════════════════════════════
-const API = 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE';
+const API = 'https://script.google.com/macros/s/AKfycbwEHQFNUmsjiooBR0bR_xxxXSLXppvqBSoKJBv_c1Ycr_4OIecTmVui5__LppOVBDYp/exec';
 // Example: 'https://script.google.com/macros/s/AKfycb.../exec'
 
 const PRODUCTS = ['Flycart','Yuko','Retainful','WPLoyalty','UpsellWP','Spark Editor','Other Works'];
@@ -361,7 +361,7 @@ function syncSt(cls, txt) {
 // ═══════════════════════════════════════
 async function init() {
   // Check if API is configured
-  if (API.includes('https://script.google.com/macros/s/AKfycbwEHQFNUmsjiooBR0bR_xxxXSLXppvqBSoKJBv_c1Ycr_4OIecTmVui5__LppOVBDYp/exec')) {
+  if (API.includes('YOUR_APPS_SCRIPT')) {
     document.getElementById('l-user').innerHTML = '<option value="">⚠️ API URL not configured</option>';
     document.getElementById('l-msg').className = 'msg err';
     document.getElementById('l-msg').textContent = 'Edit index.html and set the API URL at the top of the <script> section.';
