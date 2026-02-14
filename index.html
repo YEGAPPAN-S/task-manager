@@ -344,7 +344,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <script>
 const PRODUCTS=['Flycart','Yuko','Retainful','WPLoyalty','UpsellWP','Spark Editor','Other Works'];
 const STATUSES=['not-started','pending','working','completed'];
-let state={tasks:[],config:{repo:'',token:'',filepath:'task.json',members:['Yega'],password:''},currentUser:null,activeProduct:null,activeAssignee:null,editingTaskId:null,editingTags:[],sha:null};
+let state={tasks:[],config:{repo:'',token:'',filepath:'task.json',members:['Yega'],password:'zqTN$3ot!hG0'},currentUser:null,activeProduct:null,activeAssignee:null,editingTaskId:null,editingTags:[],sha:null};
 
 function init(){loadConfigFromLocal();populateLoginDropdown();const s=localStorage.getItem('cb_session');if(s){state.currentUser=s;showApp();}}
 function loadConfigFromLocal(){const c=localStorage.getItem('cb_config');if(c){try{state.config={...state.config,...JSON.parse(c)};}catch(e){}}document.getElementById('setup-repo').value=state.config.repo||'';document.getElementById('setup-token').value=state.config.token||'';}
