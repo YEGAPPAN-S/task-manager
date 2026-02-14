@@ -229,14 +229,24 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
     <button class="login-btn" onclick="handleLogin()">Sign In</button>
     <p class="login-error" id="login-error"></p>
     <div style="margin-top:24px;border-top:1px solid var(--border);padding-top:20px;">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;text-align:center;">⚡ First-time setup — configure once, then login</p>
       <div class="form-group" style="margin-bottom:12px">
-        <label>GitHub Config (first-time setup)</label>
+        <label>Team Password (12-digit strong)</label>
+        <input type="password" id="setup-password" placeholder="Set your team password" autocomplete="off">
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label>Team Members (comma separated)</label>
+        <input type="text" id="setup-members" placeholder="Yega, John, Priya, Ravi">
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label>GitHub Repository</label>
         <input type="text" id="setup-repo" placeholder="owner/repo (e.g. yega/tasks)">
       </div>
       <div class="form-group" style="margin-bottom:12px">
+        <label>GitHub Token</label>
         <input type="password" id="setup-token" placeholder="GitHub Personal Access Token" autocomplete="off">
       </div>
-      <button class="btn btn-secondary" style="width:100%" onclick="saveGitHubConfig()">Save GitHub Config</button>
+      <button class="login-btn" style="background:#22C55E;margin-top:4px" onclick="saveFirstTimeSetup()">💾 Save Setup & Continue</button>
     </div>
   </div>
 </div>
@@ -344,16 +354,16 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <script>
 const PRODUCTS=['Flycart','Yuko','Retainful','WPLoyalty','UpsellWP','Spark Editor','Other Works'];
 const STATUSES=['not-started','pending','working','completed'];
-let state={tasks:[],config:{repo:'',token:'',filepath:'task.json',members:['Yega'],password:'zqTN$3ot!hG0'},currentUser:null,activeProduct:null,activeAssignee:null,editingTaskId:null,editingTags:[],sha:null};
+let state={tasks:[],config:{repo:'',token:'',filepath:'task.json',members:['Yega'],password:''},currentUser:null,activeProduct:null,activeAssignee:null,editingTaskId:null,editingTags:[],sha:null};
 
 function init(){loadConfigFromLocal();populateLoginDropdown();const s=localStorage.getItem('cb_session');if(s){state.currentUser=s;showApp();}}
-function loadConfigFromLocal(){const c=localStorage.getItem('cb_config');if(c){try{state.config={...state.config,...JSON.parse(c)};}catch(e){}}document.getElementById('setup-repo').value=state.config.repo||'';document.getElementById('setup-token').value=state.config.token||'';}
+function loadConfigFromLocal(){const c=localStorage.getItem('cb_config');if(c){try{state.config={...state.config,...JSON.parse(c)};}catch(e){}}document.getElementById('setup-repo').value=state.config.repo||'';document.getElementById('setup-token').value=state.config.token||'';document.getElementById('setup-password').value=state.config.password||'';document.getElementById('setup-members').value=state.config.members.join(', ')||'';}
 function saveConfigToLocal(){localStorage.setItem('cb_config',JSON.stringify(state.config));}
 function populateLoginDropdown(){const s=document.getElementById('login-user');s.innerHTML='<option value="">Select your name…</option>';state.config.members.forEach(m=>{s.innerHTML+=`<option value="${m}">${m}</option>`;});}
 
 function handleLogin(){const u=document.getElementById('login-user').value,pw=document.getElementById('login-password').value,e=document.getElementById('login-error');if(!u){e.textContent='Please select your name.';e.style.display='block';return;}if(!state.config.password){e.textContent='No password set. Use Settings to configure.';e.style.display='block';return;}if(pw!==state.config.password){e.textContent='Invalid password. Please try again.';e.style.display='block';return;}e.style.display='none';state.currentUser=u;localStorage.setItem('cb_session',u);showApp();}
 function handleLogout(){state.currentUser=null;localStorage.removeItem('cb_session');document.getElementById('app').style.display='none';document.getElementById('login-screen').style.display='flex';document.getElementById('login-password').value='';}
-function saveGitHubConfig(){const r=document.getElementById('setup-repo').value.trim(),t=document.getElementById('setup-token').value.trim();if(r)state.config.repo=r;if(t)state.config.token=t;saveConfigToLocal();showToast('GitHub config saved!','success');}
+function saveFirstTimeSetup(){const pw=document.getElementById('setup-password').value.trim(),members=document.getElementById('setup-members').value.trim(),r=document.getElementById('setup-repo').value.trim(),t=document.getElementById('setup-token').value.trim(),e=document.getElementById('login-error');if(!pw){e.textContent='Please set a team password.';e.style.display='block';return;}if(pw.length<6){e.textContent='Password must be at least 6 characters.';e.style.display='block';return;}state.config.password=pw;if(members){state.config.members=members.split(',').map(m=>m.trim()).filter(m=>m);}if(r)state.config.repo=r;if(t)state.config.token=t;saveConfigToLocal();populateLoginDropdown();e.style.display='none';showToast('Setup complete! Now select your name and login.','success');document.getElementById('login-password').value=pw;document.getElementById('login-password').focus();}
 
 async function showApp(){document.getElementById('login-screen').style.display='none';document.getElementById('app').style.display='flex';document.getElementById('header-username').textContent=state.currentUser;document.getElementById('header-avatar').textContent=getInitials(state.currentUser);renderProductFilters();await syncFromGitHub();renderBoard();setupDragAndDrop();}
 function getInitials(n){return n.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);}
