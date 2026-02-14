@@ -31,22 +31,6 @@
       "createdAt": "2026-02-14T07:08:22.501Z",
       "createdBy": "Yega",
       "comments": []
-    },
-    {
-      "title": "test 1",
-      "description": "",
-      "product": "Flycart",
-      "priority": "medium",
-      "assignee": "Yega",
-      "status": "not-started",
-      "due": null,
-      "tags": [],
-      "updatedAt": "2026-02-14T07:11:26.449Z",
-      "updatedBy": "Yega",
-      "id": "task_mllza3g1_4lr7zj",
-      "createdAt": "2026-02-14T07:11:26.449Z",
-      "createdBy": "Yega",
-      "comments": []
     }
   ],
   "config": {
@@ -56,6 +40,6 @@
     "password": "zqTN$3ot!hG0",
     "filepath": "task.json"
   },
-  "lastUpdated": "2026-02-14T07:11:26.449Z",
+  "lastUpdated": "2026-02-14T07:11:52.599Z",
   "lastUpdatedBy": "Yega"
 }
