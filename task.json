@@ -6,10 +6,10 @@
       "product": "UpsellWP",
       "priority": "high",
       "assignee": "Yega",
-      "status": "pending",
+      "status": "not-started",
       "due": null,
       "tags": [],
-      "updatedAt": "2026-02-14T07:19:20.064Z",
+      "updatedAt": "2026-02-14T07:19:21.249Z",
       "updatedBy": "Yega",
       "id": "task_mllz533d_6rggux",
       "createdAt": "2026-02-14T07:07:32.713Z",
@@ -24,6 +24,6 @@
     "password": "zqTN$3ot!hG0",
     "filepath": "task.json"
   },
-  "lastUpdated": "2026-02-14T07:19:20.066Z",
+  "lastUpdated": "2026-02-14T07:19:21.250Z",
   "lastUpdatedBy": "Yega"
 }
