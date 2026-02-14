@@ -22,10 +22,10 @@
       "product": "Retainful",
       "priority": "high",
       "assignee": "Yega",
-      "status": "not-started",
+      "status": "pending",
       "due": "2026-02-26",
       "tags": [],
-      "updatedAt": "2026-02-14T07:23:34.204Z",
+      "updatedAt": "2026-02-14T07:27:41.401Z",
       "updatedBy": "Yega",
       "id": "task_mllzpozg_tppuiu",
       "createdAt": "2026-02-14T07:23:34.204Z",
@@ -40,6 +40,6 @@
     "password": "zqTN$3ot!hG0",
     "filepath": "task.json"
   },
-  "lastUpdated": "2026-02-14T07:23:34.206Z",
+  "lastUpdated": "2026-02-14T07:27:41.402Z",
   "lastUpdatedBy": "Yega"
 }
