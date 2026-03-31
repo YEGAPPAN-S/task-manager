@@ -393,11 +393,32 @@ async function saveTask(){const title=document.getElementById('t-title').value.t
 async function delTask(){if(!S.eId||!confirm('Delete?'))return;const r=await POST({action:'deleteTask',id:S.eId,deletedBy:S.user});if(r.success){S.tasks=S.tasks.filter(t=>t.id!==S.eId);S.comments=S.comments.filter(c=>c.taskId!==S.eId);saveCache();closeTask();renderBoard();renderFilters();toast('Deleted','success')}}
 
 // ═══ BLOG ═══
-async function openBlog(){document.getElementById('b-who').innerHTML=nms().map(n=>`<option value="${esc(n)}" ${n===S.user?'selected':''}>${esc(n)}</option>`).join('');document.getElementById('b-prod').innerHTML=PRODUCTS.map(p=>`<option value="${p}">${p}</option>`).join('');document.getElementById('b-date').value=new Date().toISOString().split('T')[0];document.getElementById('b-name').value='';document.getElementById('b-url').value='';document.getElementById('b-type').value='New Blog';renderBlogList();document.getElementById('b-ov').classList.add('on');document.getElementById('b-name').focus()}
+async function openBlog(){document.getElementById('b-who').innerHTML=nms().map(n=>`<option value="${esc(n)}" ${n===S.user?'selected':''}>${esc(n)}</option>`).join('');document.getElementById('b-prod').innerHTML=PRODUCTS.map(p=>`<option value="${p}">${p}</option>`).join('');document.getElementById('b-date').value=new Date().toISOString().split('T')[0];document.getElementById('b-name').value='';document.getElementById('b-url').value='';document.getElementById('b-type').value='New Blog';renderBlogList();document.getElementById('b-ov').classList.add('on');document.getElementById('b-name').focus();loadChecklistSummary();}
 function closeBlog(){document.getElementById('b-ov').classList.remove('on')}
 function renderBlogList(){const el=document.getElementById('b-list');if(!S.blogs.length){el.innerHTML='<div class="bempty">No blogs published yet</div>';return}let h='<table class="btbl"><thead><tr><th>Blog Name</th><th>URL</th><th>By</th><th>Product</th><th>Type</th><th>Date</th><th></th></tr></thead><tbody>';S.blogs.forEach(b=>{const tc=b.blogType==='Revamp'?'rev':'new';h+=`<tr><td class="bn">${esc(b.name)}</td><td>${b.url?`<a class="bu" href="${esc(b.url)}" target="_blank">${esc(b.url.replace(/^https?:\/\//,'').slice(0,35))}</a>`:'—'}</td><td class="bw">${esc(b.publishedBy)}</td><td>${b.product?`<span class="pb" data-p="${b.product}" style="font-size:9px">${b.product}</span>`:'—'}</td><td><span class="btype ${tc}">${b.blogType==='Revamp'?'<i class="fa-solid fa-rotate"></i> Revamp':'<i class="fa-solid fa-square-plus"></i> New'}</span></td><td class="bd">${esc(b.date)}</td><td>${isMgr()?`<button class="bdel" onclick="delBlog('${b.id}')"><i class="fa-solid fa-xmark"></i></button>`:''}</td></tr>`});h+='</tbody></table>';el.innerHTML=h}
-async function addBlogEntry(){const name=document.getElementById('b-name').value.trim();if(!name){toast('Enter blog name','error');return}const blog={name,url:document.getElementById('b-url').value.trim(),publishedBy:document.getElementById('b-who').value,product:document.getElementById('b-prod').value,blogType:document.getElementById('b-type').value,date:document.getElementById('b-date').value};const r=await POST({action:'addBlog',blog});if(r.success){if(r.blog)S.blogs.unshift(r.blog);saveCache();document.getElementById('b-name').value='';document.getElementById('b-url').value='';renderBlogList();renderBlogLabel();toast('Blog added! <i class="fa-solid fa-pen-to-square"></i>','success')}else toast(r.error||'Failed','error')}
-async function delBlog(id){if(!confirm('Delete?'))return;const r=await POST({action:'deleteBlog',id});if(r.success){S.blogs=S.blogs.filter(b=>b.id!==id);saveCache();renderBlogList();renderBlogLabel();toast('Deleted','success')}}
+async function addBlogEntry(){
+  const name=document.getElementById('b-name').value.trim();
+  if(!name){toast('Enter blog name','error');return}
+  const blog={
+    name,
+    url:document.getElementById('b-url').value.trim(),
+    publishedBy:document.getElementById('b-who').value,
+    product:document.getElementById('b-prod').value,
+    blogType:document.getElementById('b-type').value,
+    date:document.getElementById('b-date').value
+  };
+  const r=await POST({action:'addBlog',blog});
+  if(r.success){
+    if(r.blog)S.blogs.unshift(r.blog);
+    saveCache();
+    document.getElementById('b-name').value='';
+    document.getElementById('b-url').value='';
+    renderBlogList();
+    renderBlogLabel();
+    loadChecklistSummary();
+    toast('Blog added! <i class="fa-solid fa-pen-to-square"></i>','success')
+  }else toast(r.error||'Failed','error')
+}async function delBlog(id){if(!confirm('Delete?'))return;const r=await POST({action:'deleteBlog',id});if(r.success){S.blogs=S.blogs.filter(b=>b.id!==id);saveCache();renderBlogList();renderBlogLabel();toast('Deleted','success')}}
 
 // ═══ SETTINGS (with Email) ═══
 let cfgM=[];
@@ -421,38 +442,7 @@ if(e.key==='r'&&!inInput){e.preventDefault();refreshAll()}}});
 
 init();
 // ═══ CHECKLIST SUMMARY in Blog Modal ═══
-async function loadChecklistSummary() {
-  const r = await GET({ action: 'checklistAll' });
-  if (!r.success) return;
-  const grid = document.getElementById('cl-summary-grid');
-  const strip = document.getElementById('cl-summary');
-  strip.style.display = 'block';
-  grid.innerHTML = Object.entries(r.summary).map(([product, s]) => {
-    const total = s.total;
-    if (total === 0) return `
-      <div style="background:var(--bg3);border:0.5px solid var(--bd);border-radius:var(--border-radius-md);padding:10px 12px">
-        <div style="font-size:11px;font-weight:600;margin-bottom:4px">
-          <span class="pb" data-p="${product}" style="font-size:10px">${product}</span>
-        </div>
-        <div style="font-size:12px;color:var(--txm)">No blogs yet</div>
-      </div>`;
-    const passRate = Math.round((s.pass / total) * 100);
-    const color = s.pending > 0 ? 'var(--yel)' : s.fail > 0 ? 'var(--red)' : 'var(--grn)';
-    return `
-      <div style="background:var(--bg3);border:0.5px solid var(--bd);border-radius:var(--border-radius-md);padding:10px 12px">
-        <div style="font-size:11px;font-weight:600;margin-bottom:6px">
-          <span class="pb" data-p="${product}" style="font-size:10px">${product}</span>
-        </div>
-        <div style="font-size:20px;font-weight:600;color:${color}">${passRate}%</div>
-        <div style="font-size:11px;color:var(--txm);margin-top:2px">
-          ${s.pass} pass · ${s.fail} fail · ${s.pending} pending
-        </div>
-        <div style="margin-top:6px;height:3px;background:var(--bd);border-radius:99px;overflow:hidden">
-          <div style="height:100%;width:${passRate}%;background:${color};border-radius:99px;transition:width .4s"></div>
-        </div>
-      </div>`;
-  }).join('');
-}
+
 </script>
 </body>
 </html>
