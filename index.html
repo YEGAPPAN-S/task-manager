@@ -390,14 +390,115 @@ async function scanAndPreview(url) {
 
 async function runQAScan(url) {
   try {
-    // Use Apps Script as the proxy (UrlFetchApp bypasses CORS)
-    const r = await GET({ action: 'scanBlog', url });
-    if (!r.success) { toast('Scan failed: ' + (r.error||'unknown'), 'error'); return null; }
-    return r;
+    const r = await fetch(QA_PROXY + '?url=' + encodeURIComponent(url));
+    const data = await r.json();
+    if (!data.html) { toast('Scan failed: ' + (data.error || 'no HTML returned'), 'error'); return null; }
+    return parseQAFromHtml(data.html, url);
   } catch(e) {
     toast('Scan error: ' + e.message, 'error');
     return null;
   }
+}
+
+function parseQAFromHtml(html, url) {
+  const results = {};
+  const INTERNAL = ['flycart.org','retainful.com','wployalty.net','upsellwp.com','sparkeditor.com','yuko.so','app.retainful.com','app.retainful.net','app.yukoapp.com'];
+  const isInternal = href => { try { const d = new URL(href).hostname; return INTERNAL.some(id => d === id || d.endsWith('.'+id)); } catch(e) { return href.startsWith('/') || !href.startsWith('http'); }};
+
+  // Headings
+  const h1 = (html.match(/<h1[\s>][\s\S]*?<\/h1>/gi)||[]);
+  const h2 = (html.match(/<h2[\s>][\s\S]*?<\/h2>/gi)||[]);
+  const h3 = (html.match(/<h3[\s>][\s\S]*?<\/h3>/gi)||[]);
+  const h4 = (html.match(/<h4[\s>][\s\S]*?<\/h4>/gi)||[]);
+  const h5 = (html.match(/<h5[\s>][\s\S]*?<\/h5>/gi)||[]);
+  const h6 = (html.match(/<h6[\s>][\s\S]*?<\/h6>/gi)||[]);
+  results['H1'] = h1.length===1 ? 'Yes' : h1.length===0 ? 'No' : 'Multiple ('+h1.length+')';
+  results['H2'] = h2.length>0 ? 'Yes ('+h2.length+')' : 'No';
+  results['H3'] = h3.length>0 ? 'Yes ('+h3.length+')' : 'No';
+  results['H4'] = h4.length>0 ? 'Yes ('+h4.length+')' : 'No';
+  results['H5'] = h5.length>0 ? 'Yes ('+h5.length+')' : 'No';
+  results['H6'] = h6.length>0 ? 'Yes ('+h6.length+')' : 'No';
+
+  // Alignment
+  const hasCenter = /<(p|div|h[1-6])[^>]*(text-align\s*:\s*center|align="center")[^>]*>/i.test(html);
+  results['Alignment'] = hasCenter ? 'No (center align found)' : 'Yes';
+
+  // Structure
+  const hasTOC        = /table.of.content|toc|jump.to/i.test(html);
+  const hasConclusion = /conclusion|wrapping.up|final.thought|to.sum.up|in.summary|closing.thought/i.test(html);
+  const hasFAQ        = /frequently.asked|<.*faq/i.test(html);
+  results['Structure']         = hasTOC || hasConclusion ? 'Yes' : 'No';
+  results['Table of Contents'] = hasTOC        ? 'Yes' : 'No';
+  results['Conclusion']        = hasConclusion  ? 'Yes' : 'No';
+  results['FAQ']               = hasFAQ         ? 'Yes' : 'No';
+
+  // Images
+  const imgTags     = html.match(/<img[^>]+>/gi) || [];
+  const contentImgs = imgTags.filter(img => !/gravatar|avatar|logo|icon|pixel|tracking/i.test(img));
+  const missingAlt  = contentImgs.filter(img => !(/alt="[^"]+"/i.test(img)));
+  const hasCenterImg = contentImgs.some(img => /class="[^"]*align[Cc]enter[^"]*"|style="[^"]*margin[^:]*:\s*auto/i.test(img));
+  results['Image Alt Text']         = missingAlt.length===0 && contentImgs.length>0 ? 'Yes' : missingAlt.length>0 ? 'No ('+missingAlt.length+' missing)' : 'No images';
+  results['Image Alignment Center'] = hasCenterImg ? 'Yes' : contentImgs.length===0 ? 'No images' : 'No';
+  results['Image Size']             = contentImgs.length>0 ? 'Manual check' : 'No images';
+
+  // Links
+  const allLinks=[], linkRegex=/<a\s([^>]*)>/gi; let lm;
+  while((lm=linkRegex.exec(html))!==null){
+    const attrs=lm[1], hrefM=attrs.match(/href="([^"]+)"/i), relM=attrs.match(/rel="([^"]+)"/i), tgtM=attrs.match(/target="([^"]+)"/i);
+    if(!hrefM) continue;
+    const href=hrefM[1], rel=relM?relM[1].toLowerCase():'', target=tgtM?tgtM[1]:'';
+    if(href.startsWith('#')||href.startsWith('mailto:')||href.startsWith('tel:')) continue;
+    allLinks.push({href,rel,target});
+  }
+  const internalLinks    = allLinks.filter(l=>isInternal(l.href));
+  const externalLinks    = allLinks.filter(l=>!isInternal(l.href));
+  const internalNoFollow = internalLinks.filter(l=>l.rel.includes('nofollow'));
+  const externalDoFollow = externalLinks.filter(l=>!l.rel.includes('nofollow'));
+  const linksNotNewTab   = allLinks.filter(l=>l.target!=='_blank');
+  results['Anchor Text']             = allLinks.length>0 ? 'Yes ('+allLinks.length+' links)' : 'No';
+  results['Internal Link Do Follow'] = internalLinks.length===0 ? 'No internal links' : internalNoFollow.length===0 ? 'Yes' : 'No ('+internalNoFollow.length+' nofollow)';
+  results['External Link No Follow'] = externalDoFollow.length===0 ? 'Yes' : 'No ('+externalDoFollow.length+' dofollow)';
+  results['Links Open in New Tab']   = linksNotNewTab.length===0 ? 'Yes' : 'No ('+linksNotNewTab.length+' missing)';
+
+  // SEO Meta
+  const metaTitle = (html.match(/<title[^>]*>([^<]+)<\/title>/i)||[])[1]||'';
+  const metaDescM = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/i)||html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']description["']/i);
+  const metaDesc  = metaDescM ? metaDescM[1] : '';
+  const focusKwM  = html.match(/<meta[^>]+name=["'](?:focus.?keyword|keywords)["'][^>]+content=["']([^"']+)["']/i);
+  const focusKw   = focusKwM ? focusKwM[1] : '';
+  results['Meta Title']         = metaTitle ? 'Yes ('+metaTitle.trim().split(/\s+/).length+' words, '+metaTitle.length+' chars)' : 'No';
+  results['Meta Description']   = metaDesc  ? 'Yes ('+metaDesc.trim().split(/\s+/).length+' words, '+metaDesc.length+' chars)'  : 'No';
+  results['Main Focus Keyword'] = focusKw   ? 'Yes ('+focusKw.trim().split(/\s+/).length+' words)' : 'No';
+
+  // Feature image
+  const ogImg = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)||html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
+  results['Feature Image'] = ogImg ? 'Yes' : 'No';
+
+  // Taxonomy
+  results['Categories']  = /rel=["']category[^"']*["']|"@type"\s*:\s*"BlogPosting"/i.test(html) ? 'Yes' : 'No';
+  results['Tag']         = /rel=["']tag["']|post.?tag/i.test(html) ? 'Yes' : 'No';
+  results['Author Name'] = /rel=["']author["']|class=["'][^"']*author[^"']*["']|"author"\s*:/i.test(html) ? 'Yes' : 'No';
+  results['Date (Set)']  = /<time[^>]+(datetime|pubdate)|class=["'][^"']*date[^"']*["']|datePublished/i.test(html) ? 'Yes' : 'No';
+  results['URL Slug']    = 'Yes';
+
+  // CTAs — split into thirds
+  const third=Math.floor(html.length/3), ctaPat=/class=["'][^"']*(?:cta|call.to.action|wp-block-button|btn)[^"']*["']/i;
+  results['Top CTA']    = ctaPat.test(html.slice(0,third))       ? 'Yes' : 'No';
+  results['Middle CTA'] = ctaPat.test(html.slice(third,third*2)) ? 'Yes' : 'No';
+  results['Bottom CTA'] = ctaPat.test(html.slice(third*2))       ? 'Yes' : 'No';
+
+  // Yoast scores
+  const yoastSeo  = html.match(/wpseo_score[^:]*:\s*["']?(\w+)["']?/i);
+  const yoastRead = html.match(/wpseo_readability[^:]*:\s*["']?(\w+)["']?/i);
+  results['SEO Score']   = yoastSeo  ? yoastSeo[1]  : 'Manual check';
+  results['Readability'] = yoastRead ? yoastRead[1] : 'Manual check';
+
+  // Score
+  const REQUIRED = ['H1','H2','Alignment','Structure','Image Alt Text','Image Alignment Center','Anchor Text','Internal Link Do Follow','External Link No Follow','Links Open in New Tab','Meta Title','Meta Description','Main Focus Keyword','Feature Image','Categories','Tag','Author Name','Date (Set)','Top CTA','Bottom CTA','URL Slug'];
+  const passed      = REQUIRED.filter(k => results[k] && results[k].startsWith('Yes'));
+  const failedItems = REQUIRED.filter(k => !results[k] || !results[k].startsWith('Yes'));
+  const score       = Math.round((passed.length / REQUIRED.length) * 100);
+  return { success:true, url, results, score, passed:passed.length, total:REQUIRED.length, failedItems, qaStatus: score>=90?'PASS':'FAIL' };
 }
 
 async function rescanBlog(blogId, blogUrl, product) {
