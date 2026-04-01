@@ -1350,8 +1350,7 @@
 
     .btype.rev {
       background: rgba(249, 115, 22, .12);
-      color: #F97316;
-      text-wrap-mode: nowrap;
+      color: #F97316
     }
 
     .bdel {
@@ -2131,16 +2130,17 @@
     function ld(on) { document.getElementById('lb').classList.toggle('on', on) }
 
     async function GET(params) {
-      const qs = new URLSearchParams({ action: 'proxy', ...params }).toString();
+      // w=api tells the Worker to proxy to Apps Script; all other params pass through as-is
+      const qs = new URLSearchParams({ w: 'api', ...params }).toString();
       const r = await fetch(WORKER + '?' + qs);
       return r.json();
     }
     async function POST(data) {
-      const r = await fetch(WORKER + '?action=api', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      const r = await fetch(WORKER + '?w=api', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
       return r.json();
     }
     async function SCAN(url) {
-      const r = await fetch(WORKER + '?action=scan&url=' + encodeURIComponent(url));
+      const r = await fetch(WORKER + '?w=scan&url=' + encodeURIComponent(url));
       return r.json();
     }
 
@@ -2173,16 +2173,24 @@
     }
 
     async function rescanBlog(blogId, blogUrl, product) {
-      toast('<span class="sp"></span> Scanning…');
+      // Show spinner on the scan button
+      const btn = document.getElementById('scanbtn-' + blogId);
+      if (btn) { btn.disabled = true; btn.innerHTML = '<span class="sp"></span>'; }
       const result = await SCAN(blogUrl);
-      if (!result || !result.success) { toast('Scan failed: ' + (result?.error || 'unknown'), 'error'); return }
+      if (!result || !result.success) {
+        toast('Scan failed: ' + (result?.error || 'unknown'), 'error');
+        if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-rotate"></i>'; }
+        return;
+      }
+      // Store in cache
       S.qaCache[blogId] = result;
-      // Auto-save to sheet via Worker → Apps Script
+      // Auto-save to sheet
       const updates = { ...result.results, 'QA Status': result.qaStatus, 'Failed Items': (result.failedItems || []).join(', ') || 'All clear' };
       await POST({ action: 'updateChecklist', product, blogId, updates });
       renderBlogList();
       loadChecklistSummary();
       toast('QA: ' + result.score + '% — ' + result.qaStatus, result.qaStatus === 'PASS' ? 'success' : 'error');
+      // Open report automatically
       openQAModal(result, blogUrl);
     }
 
@@ -2423,21 +2431,43 @@
     function renderBlogList() {
       const el = document.getElementById('b-list');
       if (!S.blogs.length) { el.innerHTML = '<div class="bempty">No blogs published yet</div>'; return }
-      let h = '<table class="btbl"><thead><tr><th>Blog Name</th><th>URL</th><th>By</th><th>Product</th><th>Type</th><th>QA</th><th>Date</th><th></th></tr></thead><tbody>';
+      const C = 'text-align:center;white-space:nowrap;vertical-align:middle';
+      let h = `<table class="btbl"><thead><tr>
+    <th style="min-width:200px">Blog Name</th>
+    <th style="${C}">View</th>
+    <th style="${C}">By</th>
+    <th style="${C}">Product</th>
+    <th style="${C}">Type</th>
+    <th style="${C}">QA Score</th>
+    <th style="${C}">Scan</th>
+    <th style="${C}">Date</th>
+    ${isMgr() ? '<th></th>' : ''}
+  </tr></thead><tbody>`;
       S.blogs.forEach(b => {
         const tc = b.blogType === 'Revamp' ? 'rev' : 'new';
         const qa = S.qaCache[b.id];
-        const pill = qa ? `<span class="scan-pill ${qa.qaStatus === 'PASS' ? 'pass' : 'fail'}">${qa.score}% ${qa.qaStatus}</span>` : `<span class="scan-pill pending">Not scanned</span>`;
-        const scanBtn = b.url ? `<button class="scan-btn" onclick="rescanBlog('${b.id}','${esc(b.url)}','${esc(b.product)}')"><i class="fa-solid fa-rotate"></i> Scan</button>` : '';
+        // QA pill — click to open report if scan exists
+        let qaPill;
+        if (qa) {
+          const cls = qa.qaStatus === 'PASS' ? 'pass' : 'fail';
+          qaPill = `<span class="scan-pill ${cls}" style="cursor:pointer" title="Click to view report" onclick="openQAModal(S.qaCache['${b.id}'],'${esc(b.url)}')">${qa.score}% ${qa.qaStatus}</span>`;
+        } else {
+          qaPill = `<span class="scan-pill pending">—</span>`;
+        }
+        // Scan button — shows spinner while scanning
+        const scanBtn = b.url
+          ? `<button class="scan-btn" id="scanbtn-${b.id}" onclick="rescanBlog('${b.id}','${esc(b.url)}','${esc(b.product)}')"><i class="fa-solid fa-rotate"></i></button>`
+          : '<span style="color:var(--txm);font-size:11px">No URL</span>';
         h += `<tr>
-      <td class="bn">${esc(b.name)}</td>
-      <td>${b.url ? `<a class="bu" href="${esc(b.url)}" target="_blank">${esc(b.url.replace(/^https?:\/\//, '').slice(0, 30))}</a>` : '—'}</td>
-      <td class="bw">${esc(b.publishedBy)}</td>
-      <td>${b.product ? `<span class="pb" data-p="${b.product}" style="font-size:9px">${b.product}</span>` : '—'}</td>
-      <td><span class="btype ${tc}">${b.blogType === 'Revamp' ? '↺ Revamp' : '+ New'}</span></td>
-      <td>${pill}${scanBtn}</td>
-      <td class="bd2">${esc(b.date)}</td>
-      <td>${isMgr() ? `<button class="bdel" onclick="delBlog('${b.id}')"><i class="fa-solid fa-xmark"></i></button>` : ''}</td>
+      <td class="bn" style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${esc(b.name)}">${esc(b.name)}</td>
+      <td style="${C}">${b.url ? `<a href="${esc(b.url)}" target="_blank" style="color:var(--ac);font-size:12px;white-space:nowrap;text-decoration:none" title="${esc(b.url)}"><i class="fa-solid fa-arrow-up-right-from-square"></i> View Blog</a>` : '—'}</td>
+      <td style="${C}" class="bw">${esc(b.publishedBy)}</td>
+      <td style="${C}">${b.product ? `<span class="pb" data-p="${b.product}" style="font-size:9px">${b.product}</span>` : '—'}</td>
+      <td style="${C}"><span class="btype ${tc}">${b.blogType === 'Revamp' ? '↺ Revamp' : '+ New'}</span></td>
+      <td style="${C}">${qaPill}</td>
+      <td style="${C}">${scanBtn}</td>
+      <td style="${C}" class="bd2">${esc(b.date)}</td>
+      ${isMgr() ? `<td style="${C}"><button class="bdel" onclick="delBlog('${b.id}')"><i class="fa-solid fa-xmark"></i></button></td>` : ''}
     </tr>`;
       });
       h += '</tbody></table>';
